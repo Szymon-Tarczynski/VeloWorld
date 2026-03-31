@@ -1,0 +1,46 @@
+/* =============================================
+   CLIENTS – strona opinii klientów
+   ============================================= */
+
+.clients-wrap {                    /* Kontener całej sekcji klientów */
+  width: 100%;                     /* Pełna szerokość */
+  max-width: 640px;                /* Maksymalna szerokość slidera */
+}
+
+.client-card {                     /* Karta opinii klienta */
+  text-align: center;              /* Wyśrodkowanie zawartości */
+  padding: 32px 24px;              /* Większy padding niż w guide-card */
+}
+
+.client-avatar {                   /* Avatar klienta (emoji lub zdjęcie) */
+  font-size: 3.5rem;               /* Duży rozmiar emoji */
+  line-height: 1;                  /* Bez nadmiarowej wysokości */
+  margin-bottom: 12px;             /* Dolny margines */
+}
+
+.client-name {                     /* Imię i nazwisko klienta */
+  font-weight: 700;                /* Pogrubienie */
+  font-size: 1.1rem;               /* Rozmiar czcionki */
+  color: var(--text-main);         /* Ciemny kolor */
+  margin-bottom: 6px;              /* Dolny margines */
+}
+
+.client-stars {                    /* Gwiazdki oceny */
+  color: #f5a623;                  /* Złoty kolor gwiazdek */
+  font-size: 1.3rem;               /* Rozmiar gwiazdek */
+  margin-bottom: 14px;             /* Dolny margines */
+  letter-spacing: 2px;             /* Odstęp między gwiazdkami */
+}
+
+.client-opinion {                  /* Treść opinii */
+  font-size: 0.95rem;              /* Rozmiar tekstu */
+  color: var(--text-muted);        /* Przygaszony kolor */
+  line-height: 1.7;                /* Wysokość linii dla czytelności */
+  font-style: italic;              /* Kursywa – konwencja dla cytatów */
+  max-width: 480px;                /* Maksymalna szerokość tekstu */
+  margin: 0 auto;                  /* Wyśrodkowanie */
+}
+
+.clients-wrap .guide-intro {
+  margin-bottom: 32px; /* Większy odstęp pod tekstem wstępnym przed sliderem */
+}

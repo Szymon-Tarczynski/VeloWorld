@@ -1,0 +1,70 @@
+/* =============================================
+   BIKE BUILD – budowa roweru, części składowe
+   ============================================= */
+
+.guide-title { margin-bottom: 8px; font-size: 1.5rem; }  /* Nagłówek strony */
+.guide-intro { color: var(--text-muted); margin-bottom: 28px; font-size: 0.97rem; } /* Wstęp */
+
+.frame-section-card,
+.frame-calc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+/* --- LISTA CZĘŚCI (zdjęcie po lewej, opis po prawej) --- */
+.bike-parts-list {
+  display: flex; flex-direction: column; /* Karty jedna pod drugą */
+  gap: 16px;                       /* Odstęp między kartami */
+}
+
+.bike-part-row {
+  display: flex; flex-direction: row; /* Zdjęcie po lewej, opis po prawej */
+  align-items: stretch;            /* Obie kolumny tej samej wysokości */
+  border: 1px solid var(--border); /* Ramka wokół karty */
+  border-radius: 10px;             /* Zaokrąglenie rogów */
+  overflow: hidden;                /* Ukryj co wychodzi poza zaokrąglenie */
+  background: var(--bg-card);                /* Białe tło */
+  height: 140px;                   /* Stała wysokość karty */
+}
+
+.bike-part-photo {
+  width: 180px; min-width: 180px;  /* Stała szerokość ramki na zdjęcie */
+  flex-shrink: 0;                  /* Nie zmniejszaj przy ciasnym layoutcie */
+  background: var(--bg-main);      /* Szare tło gdy brak zdjęcia */
+  overflow: hidden;                /* Ukryj nadmiar zdjęcia */
+  border-right: 1px solid var(--border); /* Linia oddzielająca od opisu */
+}
+
+.bike-part-photo img {
+  width: 180px; height: 140px;     /* Stałe wymiary równe kontenerowi */
+  object-fit: cover;               /* Przytnij zdjęcie żeby wypełniło ramkę */
+  display: block;                  /* Usuń domyślny odstęp pod obrazkiem */
+}
+
+.bike-part-info {
+  padding: 16px 20px;              /* Wewnętrzny odstęp */
+  display: flex; flex-direction: column; /* Flexbox pionowy */
+  justify-content: center;         /* Wyśrodkowanie pionowe */
+  gap: 6px;                        /* Odstęp między nazwą a opisem */
+  flex: 1; min-width: 0;           /* Zajmuje resztę przestrzeni, zapobiega przepełnieniu */
+}
+
+.bike-part-name {
+  font-weight: 700; font-size: 1rem; /* Pogrubienie i rozmiar */
+  color: var(--text-main);         /* Ciemny kolor */
+}
+
+.bike-part-desc {
+  font-size: 0.88rem;              /* Mały tekst */
+  color: var(--text-muted);        /* Przygaszony kolor */
+  line-height: 1.6;                /* Wysokość linii dla czytelności */
+}
+
+@media (max-width: 500px) {        /* Na bardzo małych ekranach */
+  .bike-part-row { flex-direction: column; height: auto; } /* Zdjęcie nad opisem */
+  .bike-part-photo { width: 100%; min-width: 0; height: 160px; border-right: none; border-bottom: 1px solid var(--border); }
+  .bike-part-photo img { width: 100%; height: 160px; }
+}

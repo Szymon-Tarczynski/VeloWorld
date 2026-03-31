@@ -1,0 +1,126 @@
+/* =============================================
+   FRAME GUIDE – dobór ramy rowerowej
+   ============================================= */
+
+.guide-title { margin-bottom: 8px; font-size: 1.5rem; color: white; font-weight: 700; }
+.guide-intro { color: var(--text-muted); margin-bottom: 28px; font-size: 0.97rem; }
+
+/* --- WSPÓLNA KARTA SEKCJI – taki sam styl jak guide-card --- */
+.frame-section-card,
+.frame-calc-card {
+  background: var(--bg-card);      /* Półprzezroczyste ciemne tło */
+  border: 1px solid var(--border); /* Subtelna ramka */
+  border-radius: 12px;             /* Zaokrąglenie jak guide-card */
+  padding: 24px;                   /* Wewnętrzny odstęp */
+  margin-bottom: 24px;             /* Dolny margines */
+  backdrop-filter: blur(8px);      /* Efekt szkła */
+}
+
+.frame-section-title {
+  font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 16px;
+  color: white;                    /* Biały tekst */
+}
+
+/* --- KALKULATOR --- */
+.frame-calc-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.frame-calc-row {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+}
+
+.frame-calc-input {
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.07); /* Ciemne pole jak w formularzu */
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  width: 200px;
+  outline: none;
+  color: white;                    /* Biały tekst */
+  transition: border-color 0.15s;
+}
+.frame-calc-input::placeholder { color: var(--text-muted); }
+.frame-calc-input:focus { border-color: var(--accent); }
+
+.frame-calc-result {
+  margin-top: 14px; padding: 12px 16px;
+  border-radius: 8px; font-size: 0.95rem;
+  display: none;
+}
+.frame-calc-result.frame-calc-ok {
+  display: block;
+  background: rgba(30,80,30,0.5); color: #7dcc7d; border: 1px solid rgba(50,120,50,0.4);
+}
+.frame-calc-result.frame-calc-error {
+  display: block;
+  background: rgba(80,20,20,0.5); color: #cc7d7d; border: 1px solid rgba(120,40,40,0.4);
+}
+
+/* --- TABELA ROZMIARÓW --- */
+.frame-table-wrap { overflow-x: auto; }
+
+.frame-table {
+  width: 100%; border-collapse: collapse; font-size: 0.9rem;
+}
+.frame-table th {
+  background: rgba(79,92,255,0.3); /* Fioletowe tło nagłówka */
+  color: white;
+  padding: 10px 14px;
+  text-align: left; font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+.frame-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: white;                    /* Biały tekst w komórkach */
+}
+.frame-table tr:last-child td { border-bottom: none; }
+.frame-table tr:nth-child(even) td { background: rgba(79,92,255,0.08); }
+
+/* --- TYPY RAM --- */
+.frame-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.frame-type-card {
+  background: rgba(79,92,255,0.12); /* Lekko fioletowe tło */
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+
+.frame-type-img { font-size: 2rem; line-height: 1; }
+.frame-type-name { font-weight: 700; font-size: 0.95rem; color: white; }
+.frame-type-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+/* --- KROKI POMIARU --- */
+.frame-measure-steps { display: flex; flex-direction: column; gap: 12px; }
+
+.frame-measure-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: rgba(79,92,255,0.10); /* Lekko fioletowe tło */
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+}
+
+.frame-measure-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--accent);       /* Fioletowy kolor akcentu */
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.frame-measure-body { display: flex; flex-direction: column; gap: 4px; }
+.frame-measure-body strong { font-size: 0.93rem; color: white; }
+.frame-measure-body p { margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }

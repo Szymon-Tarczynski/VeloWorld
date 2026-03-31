@@ -1,0 +1,139 @@
+/* =============================================
+   FAULTS – Najczęstsze usterki (z audio)
+   ============================================= */
+
+/* Nagłówek */
+.guide-title {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.guide-intro {
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  font-size: 0.97rem;
+  line-height: 1.5;
+}
+
+/* ===============================
+   KARTA USTERKI
+   =============================== */
+
+.guide-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+
+  margin-bottom: 20px; /* ✅ ODSTĘP GÓRA/DÓŁ */
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+.guide-card-title {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.guide-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ===============================
+   AUDIO – ODSŁUCH USTERKI
+   =============================== */
+
+.fault-audio {
+  margin-top: 16px;
+}
+
+/* przycisk */
+.audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  background: rgba(79,92,255,0.12);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  padding: 10px 14px;
+  cursor: pointer;
+  color: white;
+
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.audio-btn:hover {
+  background: rgba(79,92,255,0.22);
+  transform: translateY(-1px);
+}
+
+.audio-btn:active {
+  transform: translateY(0);
+}
+
+/* ikonka play/pause */
+.audio-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* PLAY */
+.audio-icon .play {
+  width: 0;
+  height: 0;
+  border-left: 12px solid white;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  margin-left: 2px;
+}
+
+/* PAUSE */
+.audio-icon .pause {
+  display: none;
+  width: 14px;
+  height: 14px;
+  position: relative;
+}
+.audio-icon .pause::before,
+.audio-icon .pause::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 14px;
+  background: white;
+  border-radius: 2px;
+}
+.audio-icon .pause::before { left: 0; }
+.audio-icon .pause::after  { right: 0; }
+
+/* stan playing */
+.audio-btn.playing .play { display: none; }
+.audio-btn.playing .pause { display: block; }
+
+.audio-text {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* audio ukryte */
+.audio-el {
+  display: none;
+}

@@ -1,0 +1,15 @@
+/* =============================================
+   HOME – strona główna
+   ============================================= */
+
+.hero {
+  background: var(--bg-card);       
+  border: 1px solid var(--border); /* Ramka */
+  padding: 28px;                   /* Wewnętrzny odstęp */
+  border-radius: 10px;             /* Zaokrąglenie */
+  margin-bottom: 24px;             /* Dolny margines */
+}
+.hero h2 { margin-bottom: 20px; }  /*  Odstęp tesktu h2 pod nagłówkiem  */ 
+
+
+

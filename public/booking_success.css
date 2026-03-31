@@ -1,0 +1,63 @@
+/* =============================================
+   BOOKING SUCCESS – potwierdzenie rezerwacji
+   ============================================= */
+
+.booking-success-box {
+  background: #fff;                /* Białe tło karty */
+  border: 1px solid var(--border); /* Ramka */
+  border-radius: 12px;             /* Zaokrąglenie */
+  padding: 40px 32px;              /* Wewnętrzny odstęp */
+  max-width: 520px;                /* Maksymalna szerokość */
+  width: 100%;                     /* Pełna szerokość do max-width */
+  text-align: center;              /* Wyśrodkowanie tekstu */
+  margin: 0 auto;                  /* Wyśrodkowanie poziome */
+}
+
+.booking-success-icon {
+  font-size: 3rem;                 /* Duża ikona ✅ */
+  margin-bottom: 12px;             /* Dolny margines */
+}
+
+.booking-success-title {
+  font-size: 1.4rem; font-weight: 700; /* Rozmiar i pogrubienie */
+  color: #124d23;                  /* Ciemnozielony kolor sukcesu */
+  margin-bottom: 8px;              /* Dolny margines */
+}
+
+.booking-success-msg {
+  color: var(--text-muted);        /* Przygaszony kolor */
+  margin-bottom: 24px;             /* Dolny margines */
+  font-size: 0.95rem;              /* Rozmiar tekstu */
+}
+
+/* --- TABELA PODSUMOWANIA REZERWACJI --- */
+.booking-summary {
+  border: 1px solid var(--border); /* Ramka tabeli */
+  border-radius: 8px;              /* Zaokrąglenie */
+  overflow: hidden;                /* Ukryj narożniki przy zaokrągleniu */
+  margin-top: 24px;                /* Górny margines – odstęp od tekstu nad tabelą */
+  margin-bottom: 24px;             /* Dolny margines – odstęp od przycisku pod tabelą */
+  text-align: left;                /* Tekst do lewej */
+}
+
+.booking-summary-row {
+  display: flex;                   /* Flexbox poziomy */
+  border-bottom: 1px solid var(--border); /* Linia między wierszami */
+  font-size: 0.9rem;               /* Rozmiar czcionki */
+}
+.booking-summary-row:last-child { border-bottom: none; } /* Ostatni wiersz bez linii */
+
+.booking-summary-label {
+  width: 140px; flex-shrink: 0;    /* Stała szerokość kolumny etykiet */
+  padding: 10px 14px;              /* Wewnętrzny odstęp */
+  background: var(--bg-main);      /* Jasnoszare tło */
+  font-weight: 600; font-size: 0.85rem; /* Pogrubienie i rozmiar */
+  color: var(--text-muted);        /* Przygaszony kolor */
+}
+
+.booking-summary-value {
+  padding: 10px 14px;              /* Wewnętrzny odstęp */
+  font-size: 0.9rem;               /* Rozmiar */
+  color: var(--text-main);         /* Ciemny kolor tekstu */
+  font-weight: 600;                /* Pogrubienie */
+}

@@ -1,0 +1,56 @@
+/* =============================================
+   SERVICE GUIDE – poradniki serwisowe ze sliderem
+   ============================================= */
+
+.guide-title {
+  margin-bottom: 8px;              /* Dolny margines */
+  font-size: 1.5rem;               /* Rozmiar czcionki nagłówka */
+}
+
+.guide-intro {
+  color: var(--text-muted);        /* Przygaszony kolor */
+  margin-bottom: 28px;             /* Odstęp od slidera */
+  font-size: 0.97rem;              /* Rozmiar tekstu */
+}
+
+/* --- KARTA PORADNIKA --- */
+
+.guide-card-title {
+  font-size: 1.15rem;              /* Rozmiar czcionki tytułu */
+  margin-bottom: 16px;             /* Dolny margines */
+}
+
+/* --- KROKI --- */
+.guide-steps {
+  display: flex; flex-direction: column; /* Kroki jeden pod drugim */
+  gap: 14px; margin-bottom: 20px;  /* Odstępy między krokami i od dołu */
+}
+
+
+.guide-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+.guide-step-img {
+  font-size: 2rem; line-height: 1; /* Duże emoji */
+  flex-shrink: 0; margin-top: 2px; /* Nie zmniejsza się, drobna korekta */
+}
+
+.guide-step-body { display: flex; flex-direction: column; gap: 4px; }          /* Nagłówek + opis pionowo */
+.guide-step-body strong { font-size: 0.95rem; color: var(--text-main); }       /* Nagłówek kroku */
+.guide-step-body p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; } /* Opis kroku */
+
+/* --- CTA --- */
+.guide-cta {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}

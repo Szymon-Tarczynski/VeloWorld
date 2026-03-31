@@ -1,0 +1,49 @@
+/* =============================================
+   SHOP – sklep z produktami i filtrami kategorii
+   ============================================= */
+
+.shop-header { margin-bottom: 20px; } /* Nagłówek sklepu – dolny margines */
+.shop-header h2 { font-size: 1.4rem; margin-bottom: 12px; } /* Tytuł sklepu */
+
+.shop-filters {
+  display: flex; flex-wrap: wrap; gap: 8px; /* Filtry w rzędzie, zawijaj */
+  margin-bottom: 20px;             /* Dolny margines */
+}
+
+.shop-filter-btn {
+  padding: 6px 14px;               /* Wewnętrzny odstęp */
+  border: 1px solid var(--border); /* Ramka */
+  border-radius: 20px;             /* Pigułka */
+  background: var(--bg-card);                /* Białe tło */
+  color: var(--text-main);         /* Kolor tekstu */
+  font-size: 0.85rem;              /* Rozmiar czcionki */
+  cursor: pointer;                 /* Wskazuje klikalność */
+  text-decoration: none;           /* Bez podkreślenia */
+  transition: background 0.15s, border-color 0.15s, color 0.15s; /* Płynna animacja */
+}
+.shop-filter-btn:hover,
+.shop-filter-btn.active {
+  background: var(--accent);       /* Niebieski */
+  border-color: var(--accent);     /* Niebieska ramka */
+  color: #fff;                     /* Biały tekst */
+  text-decoration: none;           /* Bez podkreślenia */
+}
+
+.product-grid {
+  list-style: none; padding: 0;    /* Bez kropek listy */
+  display: grid;                   /* CSS Grid */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Responsywne kolumny */
+  gap: 16px; margin-top: 16px;     /* Odstępy */
+}
+
+.product-card {
+  background: var(--bg-card);                /* Białe tło */
+  border: 1px solid var(--border); /* Ramka */
+  padding: 16px; border-radius: 8px; /* Odstęp i zaokrąglenie */
+  display: flex; flex-direction: column; gap: 8px; /* Flexbox pionowy */
+}
+
+.product-name { font-weight: 700; font-size: 1rem; }                          /* Nazwa produktu */
+.product-category { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; } /* Kategoria */
+.product-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; flex: 1; } /* Opis */
+.price { font-weight: 700; }       /* Pogrubiona cena */
