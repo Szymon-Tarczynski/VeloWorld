@@ -4,7 +4,7 @@
 // =============================================
 
 $pageTitle = 'VeloWorld – Trasy i pumptracki';
-$pageCss   = 'guides.css'; // CSS kafelków (public/guides.css)
+$pageCss   = 'guides.css'; 
 ?>
 
 <?php include __DIR__ . '/partials/topbar.php'; ?>
