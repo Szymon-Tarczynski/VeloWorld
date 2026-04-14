@@ -1,49 +1,57 @@
-/* =============================================
-   SHOP – sklep z produktami i filtrami kategorii
-   ============================================= */
+.shop-sub-bar {display:flex;justify-content:flex-end;gap:8px;padding:8px 0 16px}
+.shop-icon-btn {display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 14px;color:#fff;font-size:13px;cursor:pointer;transition:.15s}
+.shop-icon-btn:hover,.shop-icon-btn.active {background:rgba(79,92,255,.2);border-color:#4f5cff}
+.shop-badge {position:absolute;top:-7px;right:-7px;background:#ff4f6e;color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
 
-.shop-header { margin-bottom: 20px; } /* Nagłówek sklepu – dolny margines */
-.shop-header h2 { font-size: 1.4rem; margin-bottom: 12px; } /* Tytuł sklepu */
+.shop-filter-panel,.shop-liked-panel {display:none;padding:20px;margin-bottom:16px}
+.shop-filter-panel.open,.shop-liked-panel.open {display:block}
 
-.shop-filters {
-  display: flex; flex-wrap: wrap; gap: 8px; /* Filtry w rzędzie, zawijaj */
-  margin-bottom: 20px;             /* Dolny margines */
-}
+.sfp-title,.slp-title {font-size:14px;font-weight:600;margin-bottom:16px}
+.sfp-grid {display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.sfp-group label {display:block;font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.sfp-pills {display:flex;flex-wrap:wrap;gap:6px}
+.sfp-pill {background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:5px 12px;font-size:12px;color:rgba(255,255,255,.75);cursor:pointer;transition:.15s}
+.sfp-pill:hover,.sfp-pill.active {background:rgba(79,92,255,.25);border-color:#4f5cff;color:#fff}
+.sfp-apply {width:100%}
 
-.shop-filter-btn {
-  padding: 6px 14px;               /* Wewnętrzny odstęp */
-  border: 1px solid var(--border); /* Ramka */
-  border-radius: 20px;             /* Pigułka */
-  background: var(--bg-card);                /* Białe tło */
-  color: var(--text-main);         /* Kolor tekstu */
-  font-size: 0.85rem;              /* Rozmiar czcionki */
-  cursor: pointer;                 /* Wskazuje klikalność */
-  text-decoration: none;           /* Bez podkreślenia */
-  transition: background 0.15s, border-color 0.15s, color 0.15s; /* Płynna animacja */
-}
-.shop-filter-btn:hover,
-.shop-filter-btn.active {
-  background: var(--accent);       /* Niebieski */
-  border-color: var(--accent);     /* Niebieska ramka */
-  color: #fff;                     /* Biały tekst */
-  text-decoration: none;           /* Bez podkreślenia */
-}
+.slp-empty {font-size:13px;color:rgba(255,255,255,.35);text-align:center;padding:16px 0}
+.slp-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slp-item {background:rgba(79,92,255,.1);border:1px solid rgba(79,92,255,.2);border-radius:10px;padding:10px;text-align:center;font-size:12px;color:rgba(255,255,255,.75);position:relative}
+.slp-remove {position:absolute;top:4px;right:6px;background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:12px}
+.slp-remove:hover {color:#ff4f6e}
+.slp-emoji {font-size:28px;display:block;margin-bottom:4px}
+.slp-name {font-size:11px}
+.slp-price {font-size:12px;color:#4f5cff;font-weight:600;margin-top:2px}
 
-.product-grid {
-  list-style: none; padding: 0;    /* Bez kropek listy */
-  display: grid;                   /* CSS Grid */
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Responsywne kolumny */
-  gap: 16px; margin-top: 16px;     /* Odstępy */
-}
+.tinder-area {display:flex;flex-direction:column;align-items:center;gap:20px;padding:8px 0 32px}
+.tinder-hint {font-size:12px;color:rgba(255,255,255,.35)}
+.tinder-wrap {position:relative;width:100%;max-width:360px;height:480px}
+.tinder-card {position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;cursor:grab;user-select:none}
+.tinder-img {height:240px;background:linear-gradient(135deg,rgba(79,92,255,.15),rgba(20,25,70,.5));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tinder-emoji {font-size:80px}
+.tinder-info {padding:20px;flex:1;display:flex;flex-direction:column;gap:6px}
+.tinder-name {font-size:18px;font-weight:700}
+.tinder-cat {font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em}
+.tinder-price {font-size:22px;font-weight:700;color:var(--accent);margin-top:2px}
+.tinder-tags {display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tinder-tag {background:rgba(79,92,255,.15);border:1px solid rgba(79,92,255,.3);border-radius:12px;padding:3px 10px;font-size:11px;color:rgba(255,255,255,.7)}
 
-.product-card {
-  background: var(--bg-card);                /* Białe tło */
-  border: 1px solid var(--border); /* Ramka */
-  padding: 16px; border-radius: 8px; /* Odstęp i zaokrąglenie */
-  display: flex; flex-direction: column; gap: 8px; /* Flexbox pionowy */
-}
+.tinder-like-ov,.tinder-nope-ov {position:absolute;top:24px;border:3px solid;border-radius:8px;padding:6px 14px;font-size:18px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .1s}
+.tinder-like-ov {right:20px;border-color:#4ade80;color:#4ade80;transform:rotate(12deg)}
+.tinder-nope-ov {left:20px;border-color:#ff4f6e;color:#ff4f6e;transform:rotate(-12deg)}
 
-.product-name { font-weight: 700; font-size: 1rem; }                          /* Nazwa produktu */
-.product-category { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; } /* Kategoria */
-.product-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; flex: 1; } /* Opis */
-.price { font-weight: 700; }       /* Pogrubiona cena */
+.tinder-btns {display:flex;gap:24px;align-items:center}
+.tinder-btn {width:60px;height:60px;border-radius:50%;border:2px solid;background:var(--bg-card);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.tinder-btn.skip {border-color:#ff4f6e;color:#ff4f6e}
+.tinder-btn.skip:hover {background:rgba(255,79,110,.15);transform:scale(1.1)}
+.tinder-btn.like {border-color:#4ade80;color:#4ade80}
+.tinder-btn.like:hover {background:rgba(74,222,128,.15);transform:scale(1.1)}
+.tinder-progress {font-size:12px;color:rgba(255,255,255,.35)}
+
+.tinder-done {text-align:center;padding:60px 24px;color:rgba(255,255,255,.5);font-size:14px;display:flex;flex-direction:column;align-items:center;gap:16px}
+
+.nav-search-wrap {flex:1;max-width:360px;position:relative}
+.nav-search-wrap input {width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:7px 14px 7px 34px;font-size:13px;color:#fff;outline:none;transition:.2s}
+.nav-search-wrap input::placeholder {color:rgba(255,255,255,.4)}
+.nav-search-wrap input:focus {border-color:var(--accent);background:rgba(79,92,255,.08)}
+.nav-search-icon {position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none;display:flex}

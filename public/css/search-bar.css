@@ -1,0 +1,75 @@
+/* Twój istniejący searchbar (już minimalny) */
+.nav-search-wrap {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+}
+
+.nav-search-wrap input {
+  width: 100%;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px;
+  padding: 7px 14px 7px 34px;
+  font-size: 13px;
+  color: #fff;
+  outline: none;
+  transition: .2s;
+}
+
+.nav-search-wrap input::placeholder { color: rgba(255,255,255,.4); }
+.nav-search-wrap input:focus {
+  border-color: var(--accent);
+  background: rgba(79,92,255,.08);
+}
+
+.nav-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+  pointer-events: none;
+  display: flex;
+}
+
+
+/* pokaż input */
+.nav-search-wrap:hover #smartSearch,
+#smartSearch:focus {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* dropdown z wynikami – POD INPUTEM */
+.site-search-results {
+  position: absolute;
+  top: calc(100% + 56px);
+  left: 0;
+
+  width: min(420px, 90vw);
+  padding: 10px;
+
+  background: rgba(10, 12, 40, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.55);
+
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: .2s ease;
+
+  z-index: 400;
+}
+
+/* aktywny dropdown */
+.site-search-results.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}

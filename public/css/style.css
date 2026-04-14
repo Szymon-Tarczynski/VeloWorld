@@ -87,6 +87,13 @@ a:hover {
   border-bottom: 1px solid var(--border);
 }
 
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;           /* odstęp między logo a searchbarem */
+  flex-shrink: 0;
+}
+
 .logo {
   font-weight: 600;
   font-size: 18px;
@@ -207,6 +214,16 @@ a:hover {
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
   z-index: 300;
+}
+
+/*FIX uciekającego hovera - usunięcie przerwy między przyciskiem a menu */
+.dropdown-menu::before{
+  content:"";
+  position:absolute;
+  left:-12px;
+  right:-12px;
+  top:-18px;
+  height:18px;
 }
 
 .dropdown:hover .dropdown-menu {
