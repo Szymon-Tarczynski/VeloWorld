@@ -12,7 +12,8 @@ require_once __DIR__ . '/../app/bookings.php';
 // -------------------------------------------------
 // Funkcja pomocnicza: ładuje widok z katalogu /views
 // -------------------------------------------------
-function view(string $name, array $data = []): void {
+function view(string $name, array $data = []): void
+{
 
     // Zamienia elementy tablicy na zmienne
     // np. ['products' => $products] => $products
@@ -40,13 +41,16 @@ switch ($page) {
 
     // ===== SKLEP =====
     case 'shop':
-        $category = $_GET['category'] ?? null;
-        $products = getProducts($category);
-
-        view('shop', [
-            'products' => $products,
-            'category' => $category
+        $products = getProducts([
+            'category' => $_GET['category'] ?? '',
+            'gender' => $_GET['gender'] ?? '',
+            'bike_type' => $_GET['bike_type'] ?? '',
+            'frame_size' => $_GET['frame_size'] ?? '',
+            'wheel_size' => $_GET['wheel_size'] ?? '',
+            'q' => trim($_GET['q'] ?? ''),
         ]);
+
+        view('shop', ['products' => $products]);
         break;
 
     // ===== PORADNIKI (TRASY / PUMPTRACKI) =====
@@ -96,10 +100,10 @@ switch ($page) {
         // Dane z formularza
         $data = [
             'customer_name' => $_POST['customer_name'] ?? '',
-            'phone'         => $_POST['phone'] ?? '',
-            'service'       => $_POST['service'] ?? '',
-            'date'          => $_POST['date'] ?? '',
-            'note'          => $_POST['note'] ?? ''
+            'phone' => $_POST['phone'] ?? '',
+            'service' => $_POST['service'] ?? '',
+            'date' => $_POST['date'] ?? '',
+            'note' => $_POST['note'] ?? ''
         ];
 
         // Walidacja
@@ -108,7 +112,7 @@ switch ($page) {
         if ($errors) {
             view('workshop', [
                 'errors' => $errors,
-                'old'    => $data
+                'old' => $data
             ]);
             break;
         }
@@ -129,7 +133,7 @@ switch ($page) {
         } else {
             view('workshop', [
                 'errors' => ['Nie udało się zapisać rezerwacji.'],
-                'old'    => $data
+                'old' => $data
             ]);
         }
         break;
