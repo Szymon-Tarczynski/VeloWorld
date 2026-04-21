@@ -1,4 +1,30 @@
 /* ===============================
+   RESET PODSTAWOWY
+================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   MAIN CONTENT
+================================ */
+
+.main-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ===============================
    SEKCJE
 ================================ */
 
@@ -29,17 +55,59 @@
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 20px;
-
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
+
+
+/* ===============================
+   MINIATURA (PODGLĄD ZDJĘCIA)
+================================ */
+
+
+/* Wymuszenie układu poziomego na całym kafelku */
+.tile-card.tile-link {
+  display: flex;
+  align-items: center;   /* WYŚRODKOWANIE PIONOWE */
+  gap: 16px;
+}
+
+/* Miniatura – DUŻA */
+.tile-thumb {
+  flex: 0 0 96px;        /* szerokość kolumny miniatury */
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Obrazek w miniaturze */
+.tile-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* przycina zamiast rozciągać */
+  display: block;
+}
+
+/* Treść kafelka */
+.tile-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ===============================
+  ------------------------------------------------------
+================================ */
+
+
 
 .tile-card:hover {
   transform: translateY(-4px);
   border-color: rgba(79,92,255,0.6);
 }
 
-/* Tytuł kafelka */
 .tile-title {
   font-size: 1.05rem;
   font-weight: 700;
@@ -47,7 +115,6 @@
   color: white;
 }
 
-/* Opis */
 .tile-desc {
   font-size: 0.9rem;
   color: rgba(255,255,255,0.75);
@@ -55,7 +122,6 @@
   margin-bottom: 14px;
 }
 
-/* Tagi */
 .tile-tags {
   display: flex;
   gap: 8px;
@@ -68,4 +134,157 @@
   border-radius: 999px;
   background: rgba(79,92,255,0.18);
   color: #cfd4ff;
+}
+
+.tile-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===============================
+   PODSTRONY PORADNIKÓW
+================================ */
+
+.guide-head {
+  margin-bottom: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.back-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.guide-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: white;
+}
+
+.guide-intro {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ===============================
+   ACCORDION
+================================ */
+
+.accordion {
+  display: grid;
+  gap: 14px;
+}
+
+.acc-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.acc-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.acc-summary::-webkit-details-marker {
+  display: none;
+}
+
+.acc-title {
+  font-weight: 700;
+  color: white;
+}
+
+.acc-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(79,92,255,0.18);
+  color: #cfd4ff;
+  font-weight: 700;
+  transition: transform 0.25s ease;
+}
+
+.acc-content {
+  padding: 0 20px 18px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+}
+
+.acc-item[open] .acc-icon {
+  transform: rotate(45deg);
+}
+
+/* ===============================
+   BANER OBRAZKOWY 
+================================ */
+
+.guide-banner {
+  width: 100%;
+  margin-bottom: 24px;     
+  overflow: hidden;
+  border-radius: 0;        
+}
+
+/* wysokość paska */
+.guide-banner img {
+  width: 100%;
+  height: 220px;          
+  object-fit: cover;       
+  object-position: center; 
+  display: block;
+
+  /* kosmetyka: lepsza percepcja jakości */
+  image-rendering: auto;
+}
+
+
+/* ===============================
+   MAPA PUMPTRACKÓW
+================================ */
+
+.pumptrack-map {
+  width: 100%;
+  height: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+
+/* ===============================
+   BANER OGRANICZONY DO FEEDU
+   (tylko dla pumptracków – po kliknięciu)
+================================ */
+
+.guide-banner--contained {
+  max-width: 1100px;      /* dokładnie jak main-content */
+  margin: 0 auto 24px;    /* wyśrodkowany + odstęp */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.guide-banner--contained img {
+  width: 100%;
+  height: 280px;          /* kontrolowana wysokość */
+  object-fit: cover;     /* brak rozciągania */
+  display: block;
 }

@@ -1,0 +1,448 @@
+/* =============================================
+   cart.css – VeloWorld Koszyk
+   Spójny z globalnym stylem projektu
+   ============================================= */
+
+/* ── PAGE ─────────────────────────────────────────────────── */
+.cart-page {
+  /* dziedziczy z .main-content: padding 32px 48px, max-width 1200px */
+}
+
+/* ── BREADCRUMB ───────────────────────────────────────────── */
+.cart-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.cart-breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.cart-breadcrumb a:hover { opacity: 1; color: white; }
+.cart-breadcrumb .current { color: var(--text-main); }
+.cart-breadcrumb span { color: var(--text-muted); }
+
+/* ── LAYOUT ───────────────────────────────────────────────── */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 310px;
+  gap: 20px;
+  align-items: start;
+}
+.cart-right {
+  position: sticky;
+  top: 80px; /* navbar ma 58px + margines */
+}
+
+/* ── CART PANEL (używa globalnego .glass) ─────────────────── */
+.cart-panel {
+  overflow: hidden;
+}
+
+.cp-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.cp-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.cp-badge {
+  margin-left: auto;
+  background: rgba(79, 92, 255, 0.15);
+  border: 1px solid rgba(79, 92, 255, 0.3);
+  color: #8b97ff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── EMPTY STATE ──────────────────────────────────────────── */
+.cart-empty {
+  padding: 60px 28px;
+  text-align: center;
+}
+.ce-icon {
+  font-size: 3rem;
+  opacity: 0.22;
+  margin-bottom: 16px;
+}
+.cart-empty h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+.cart-empty p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 22px;
+}
+.ce-btn { font-size: 0.88rem; padding: 10px 24px; }
+
+/* ── ITEMS LIST ───────────────────────────────────────────── */
+.cart-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ci-row {
+  display: grid;
+  grid-template-columns: 66px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 28px;
+  position: relative;
+  transition: background 0.15s;
+}
+.ci-row::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 28px; right: 28px;
+  height: 1px;
+  background: var(--border);
+}
+.ci-row:last-child::after { display: none; }
+.ci-row:hover { background: rgba(255,255,255,0.025); }
+
+/* thumbnail */
+.ci-thumb {
+  width: 66px; height: 66px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.ci-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.ci-emoji { font-size: 2rem; }
+
+/* info */
+.ci-info { min-width: 0; }
+.ci-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}
+.ci-tag {
+  display: inline-block;
+  background: rgba(79, 92, 255, 0.15);
+  color: #8b97ff;
+  font-size: 0.67rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-bottom: 4px;
+}
+.ci-unit-price {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+
+/* right column */
+.ci-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.ci-price {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+}
+.ci-price span {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 1px;
+}
+
+/* controls */
+.ci-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qty-form { margin: 0; }
+.qty-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.qty-btn {
+  width: 30px; height: 30px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+.qty-btn:hover { color: white; background: rgba(79,92,255,0.2); }
+.qty-val {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+/* remove */
+.ci-remove {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+.ci-remove:hover {
+  color: #f87171;
+  background: rgba(239,68,68,0.1);
+}
+
+/* ── PROMO ─────────────────────────────────────────────────── */
+.cart-promo {
+  padding: 16px 28px;
+  border-top: 1px solid var(--border);
+}
+.promo-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.promo-input {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: white;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+.promo-input::placeholder { color: var(--text-muted); }
+.promo-input:focus { outline: none; border-color: var(--accent); }
+.promo-input.applied { border-color: #4ade80; color: #4ade80; }
+
+.promo-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgba(79,92,255,0.18);
+  border: 1px solid rgba(79,92,255,0.35);
+  color: #8b97ff;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.promo-btn:hover { background: rgba(79,92,255,0.3); }
+
+.promo-ok {
+  font-size: 0.8rem;
+  color: #4ade80;
+  font-weight: 600;
+}
+.promo-remove {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.promo-remove:hover { color: #f87171; }
+
+/* ── CLEAR BTN ─────────────────────────────────────────────── */
+.clear-form { margin-top: 10px; }
+.clear-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.7;
+  transition: opacity 0.15s, color 0.15s;
+}
+.clear-btn:hover { opacity: 1; color: #f87171; }
+
+/* ── SUMMARY PANEL ─────────────────────────────────────────── */
+.summary-panel {
+  padding: 24px;
+}
+.sp-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+.sp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 11px;
+}
+.sp-val { color: var(--text-main); font-weight: 500; }
+.sp-discount { color: #4ade80; }
+.sp-discount span { color: #4ade80; }
+
+/* free ship badge */
+.sp-free-ship {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(74,222,128,0.07);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 0.77rem;
+  color: #4ade80;
+  margin: 12px 0;
+}
+
+/* progress bar */
+.sp-ship-bar-wrap { margin: 12px 0; }
+.sp-ship-bar-label {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-bottom: 7px;
+}
+.sp-ship-bar-label strong { color: var(--text-main); }
+.sp-ship-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sp-ship-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #8b97ff);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* total */
+.sp-total {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0;
+}
+.sp-total-val {
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+/* checkout — rozszerzone .btn */
+.checkout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+.checkout-btn:hover {
+  background: var(--accent-hover);
+  color: white;
+  transform: translateY(-1px);
+}
+.checkout-btn:active { transform: none; }
+
+.continue-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.79rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+.continue-link:hover { opacity: 1; color: white; }
+
+/* payment badges */
+.sp-payments {
+  margin-top: 18px;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.pay-badge {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── ANIMACJE ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cart-left  { animation: fadeUp 0.3s ease both; }
+.cart-right { animation: fadeUp 0.3s 0.07s ease both; }
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* breakpoint zgodny z global.css */
+  .cart-layout { grid-template-columns: 1fr; }
+  .cart-right  { position: static; }
+  .ci-row      { grid-template-columns: 56px 1fr auto; padding: 13px 16px; }
+  .ci-thumb    { width: 56px; height: 56px; }
+  .cp-header   { padding: 18px 16px 14px; }
+  .cart-promo  { padding: 14px 16px; }
+}

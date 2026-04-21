@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+
 $pageTitle = 'VeloWorld – Sklep';
 $pageCss = 'shop.css';
 
@@ -10,11 +14,12 @@ $wheel_size = $_GET['wheel_size'] ?? '';
 $q = trim($_GET['q'] ?? '');
 $view_mode = $_GET['view'] ?? 'classic';
 
+$currentUrl = $_SERVER['REQUEST_URI'] ?? 'index.php?page=shop';
+
 function queryWith(array $add = [], array $remove = []): string
 {
   $p = array_merge($_GET, $add);
-  foreach ($remove as $k)
-    unset($p[$k]);
+  foreach ($remove as $k) unset($p[$k]);
   return 'index.php?' . http_build_query($p);
 }
 
@@ -24,6 +29,18 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
 <?php include 'partials/topbar.php'; ?>
 
 <main class="main-content">
+
+  <?php if (!empty($_SESSION['flash_cart_added'])): ?>
+    <div class="alert success" style="margin:10px 0;">✅ Dodano do koszyka</div>
+    <?php unset($_SESSION['flash_cart_added']); ?>
+  <?php endif; ?>
+
+  <?php if (!empty($_SESSION['flash_cart_error'])): ?>
+    <div class="alert error" style="margin:10px 0;">
+      <?php echo htmlspecialchars($_SESSION['flash_cart_error']); ?>
+    </div>
+    <?php unset($_SESSION['flash_cart_error']); ?>
+  <?php endif; ?>
 
   <!-- SUB-BAR -->
   <div class="shop-sub-bar">
@@ -67,7 +84,9 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
           <div class="sfp-pills" data-name="frame_size">
             <?php foreach (['' => 'Wszystkie', 'XS' => 'XS', 'S' => 'S', 'M' => 'M', 'L' => 'L', 'XL' => 'XL'] as $v => $l): ?>
               <span class="sfp-pill <?php echo $frame_size === $v ? 'active' : ''; ?>"
-                data-val="<?php echo $v; ?>"><?php echo $l; ?></span>
+                data-val="<?php echo htmlspecialchars($v); ?>">
+                <?php echo htmlspecialchars($l); ?>
+              </span>
             <?php endforeach; ?>
           </div>
           <input type="hidden" name="frame_size" value="<?php echo htmlspecialchars($frame_size); ?>">
@@ -83,7 +102,9 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
               '700c (szosowe/gravel/fitness/trekking)' => '700c'
             ] as $v => $l): ?>
               <span class="sfp-pill <?php echo $wheel_size === $v ? 'active' : ''; ?>"
-                data-val="<?php echo $v; ?>"><?php echo $l; ?></span>
+                data-val="<?php echo htmlspecialchars($v); ?>">
+                <?php echo htmlspecialchars($l); ?>
+              </span>
             <?php endforeach; ?>
           </div>
           <input type="hidden" name="wheel_size" value="<?php echo htmlspecialchars($wheel_size); ?>">
@@ -105,10 +126,10 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
               'xc' => 'XC',
               'full' => 'Full Suspension'
             ] as $v => $l): ?>
-
-
               <span class="sfp-pill <?php echo $bike_type === $v ? 'active' : ''; ?>"
-                data-val="<?php echo $v; ?>"><?php echo $l; ?></span>
+                data-val="<?php echo htmlspecialchars($v); ?>">
+                <?php echo htmlspecialchars($l); ?>
+              </span>
             <?php endforeach; ?>
           </div>
           <input type="hidden" name="bike_type" value="<?php echo htmlspecialchars($bike_type); ?>">
@@ -119,7 +140,9 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
           <div class="sfp-pills" data-name="gender">
             <?php foreach (['' => 'Wszystkie', 'Damski' => 'Damski', 'Męski' => 'Męski', 'Unisex' => 'Unisex'] as $v => $l): ?>
               <span class="sfp-pill <?php echo $gender === $v ? 'active' : ''; ?>"
-                data-val="<?php echo $v; ?>"><?php echo $l; ?></span>
+                data-val="<?php echo htmlspecialchars($v); ?>">
+                <?php echo htmlspecialchars($l); ?>
+              </span>
             <?php endforeach; ?>
           </div>
           <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>">
@@ -130,7 +153,7 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
     </form>
   </div>
 
-  <!-- KOSZYK ULUBIONYCH -->
+  <!-- ULUBIONE -->
   <div class="shop-liked-panel glass" id="likedPanel">
     <div class="slp-title">♥ <span id="likedTitle">Ulubione (0)</span></div>
     <div id="likedContent">
@@ -138,9 +161,8 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
     </div>
   </div>
 
-
   <?php if ($view_mode === 'tinder'): ?>
-    <!-- ===== TRYB TINDER ===== -->
+    <!-- TRYB TINDER (bez zmian) -->
     <?php
     $js_bikes = [];
     if (!empty($products)) {
@@ -164,7 +186,6 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
     </script>
 
     <div class="tinder-area" id="tinderArea">
-      <p class="tinder-hint">Przeciągnij w prawo ♥ aby polubić, w lewo ✕ aby pominąć</p>
       <div class="tinder-wrap" id="cardWrap">
         <div class="tinder-card glass" id="bikeCard">
           <div class="tinder-img" id="bikeImg">
@@ -195,7 +216,7 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
     </div>
 
   <?php else: ?>
-    <!-- ===== TRYB KLASYCZNY ===== -->
+    <!-- TRYB KLASYCZNY -->
     <div id="classicView">
 
       <div class="shop-header">
@@ -205,9 +226,11 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
             <span class="shop-category-badge"><?php echo htmlspecialchars($categories[$category]); ?></span>
           <?php endif; ?>
         </h2>
+
         <div class="shop-filters">
           <a class="shop-filter-btn <?php echo empty($category) ? 'active' : ''; ?>"
             href="<?php echo queryWith([], ['category']); ?>">Wszystkie</a>
+
           <?php foreach ($categories as $key => $label): ?>
             <a class="shop-filter-btn <?php echo $category === $key ? 'active' : ''; ?>"
               href="<?php echo queryWith(['category' => $key]); ?>">
@@ -223,11 +246,10 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
         <ul class="product-grid">
           <?php foreach ($products as $p):
             $tags = !empty($p['tags_json']) ? json_decode($p['tags_json'], true) : [];
-            ?>
+          ?>
             <li class="product-card" data-gender="<?php echo htmlspecialchars($p['gender'] ?? ''); ?>">
 
               <div class="product-img">
-
                 <?php if (!empty($p['bike_type'])): ?>
                   <div class="bike-type-label">
                     <?php echo htmlspecialchars($p['bike_type']); ?>
@@ -235,11 +257,11 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
                 <?php endif; ?>
 
                 <?php if (!empty($p['image'])): ?>
-                  <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['name']); ?>">
+                  <img src="<?php echo htmlspecialchars($p['image']); ?>"
+                       alt="<?php echo htmlspecialchars($p['name']); ?>">
                 <?php else: ?>
                   <span class="product-emoji"><?php echo $p['emoji'] ?? '🚲'; ?></span>
                 <?php endif; ?>
-
               </div>
 
               <?php if (!empty($p['gender'])): ?>
@@ -265,11 +287,30 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
 
                 <div class="price"><?php echo htmlspecialchars($p['price']); ?> zł</div>
 
-                <a class="btn" href="index.php?page=product&amp;id=<?php echo (int) $p['id']; ?>">
-                  Zobacz
-                </a>
-              </div>
+                <div class="product-actions" style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <a class="btn" href="index.php?page=product&amp;id=<?php echo (int) $p['id']; ?>">
+                    Zobacz
+                  </a>
 
+                  <!-- DODAJ DO KOSZYKA -->
+                  <form method="POST" action="index.php?page=cart_action" style="margin:0;">
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="id" value="<?php echo (int)$p['id']; ?>">
+                    <input type="hidden" name="qty" value="1">
+                    <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($currentUrl); ?>">
+
+                    <!-- fallback dane produktu (żeby działało nawet bez $pdo) -->
+                    <input type="hidden" name="name" value="<?php echo htmlspecialchars($p['name']); ?>">
+                    <input type="hidden" name="price" value="<?php echo htmlspecialchars((string)((float)$p['price'])); ?>">
+                    <input type="hidden" name="image" value="<?php echo htmlspecialchars($p['image'] ?? ''); ?>">
+                    <input type="hidden" name="bike_type" value="<?php echo htmlspecialchars($p['bike_type'] ?? ''); ?>">
+                    <input type="hidden" name="emoji" value="<?php echo htmlspecialchars($p['emoji'] ?? '🚲'); ?>">
+
+                    <button type="submit" class="btn">Dodaj do koszyka</button>
+                  </form>
+                </div>
+
+              </div>
             </li>
           <?php endforeach; ?>
         </ul>

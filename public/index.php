@@ -1,45 +1,27 @@
 <?php
-// =============================================
-// VeloWorld – GŁÓWNY ROUTER APLIKACJI
-// parametr ?page=...
-// =============================================
+// VeloWorld – router (?page=...)
 
-
-// Dołączenie plików z logiką aplikacji (produkty i rezerwacje)
+// logika aplikacji
 require_once __DIR__ . '/../app/products.php';
 require_once __DIR__ . '/../app/bookings.php';
 
-// -------------------------------------------------
-// Funkcja pomocnicza: ładuje widok z katalogu /views
-// -------------------------------------------------
+// stała do widoków (żeby nie liczyć ../ w widokach)
+define('VIEWS_PATH', realpath(__DIR__ . '/../views'));
+
 function view(string $name, array $data = []): void
 {
-
-    // Zamienia elementy tablicy na zmienne
-    // np. ['products' => $products] => $products
     extract($data);
-
-    // Dołącza plik widoku, np. views/guides.php
-    include __DIR__ . "/../views/{$name}.php";
+    require VIEWS_PATH . '/' . $name . '.php';
 }
 
-// -------------------------------------------------
-// Odczyt parametru page z adresu URL
-// np. index.php?page=guides
-// -------------------------------------------------
 $page = $_GET['page'] ?? 'home';
 
-// -------------------------------------------------
-// ROUTING – wybór strony
-// -------------------------------------------------
 switch ($page) {
 
-    // ===== STRONA GŁÓWNA =====
     case 'home':
         view('home');
         break;
 
-    // ===== SKLEP =====
     case 'shop':
         $products = getProducts([
             'category' => $_GET['category'] ?? '',
@@ -49,55 +31,78 @@ switch ($page) {
             'wheel_size' => $_GET['wheel_size'] ?? '',
             'q' => trim($_GET['q'] ?? ''),
         ]);
-
         view('shop', ['products' => $products]);
         break;
 
-    // ===== PORADNIKI (TRASY / PUMPTRACKI) =====
-    case 'guides':
-        view('guides');
-        break;
+    case 'guides': {
+        $guide = $_GET['guide'] ?? '';
 
-    // ===== NAJCZĘSTSZE USTERKI =====
+        if ($guide !== '') {
+            $guide = preg_replace('~[^a-z0-9\-]~i', '', $guide);
+            $file = VIEWS_PATH . "/guides/{$guide}.php";
+
+            if (is_file($file)) {
+                view("guides/{$guide}");
+                break;
+            }
+
+            http_response_code(404);
+            view('home'); // możesz podmienić na własny widok 404
+            break;
+        }
+
+        view('guides'); // główna strona poradników
+        break;
+    }
+
+    // reszta stron tak jak masz:
     case 'faults':
         view('faults');
         break;
 
-    // ===== DOBÓR RAMY =====
     case 'frame_guide':
         view('frame_guide');
         break;
 
-    // ===== SERWIS =====
     case 'service_guide':
         view('service_guide');
         break;
 
-    // ===== BUDOWA ROWERU =====
     case 'bike_build':
         view('bike_build');
         break;
 
-    // ===== KLIENCI =====
     case 'clients':
         view('clients');
         break;
 
-    // ===== WARSZTAT =====
     case 'workshop':
         view('workshop');
         break;
 
-    // ===== OBSŁUGA FORMULARZA =====
+    case 'cart':
+        view('cart');
+        break;
+
+    case 'cart_action':
+        require __DIR__ . '/../app/cart_action.php';
+        break;
+
+    case 'cart_promo':
+        require __DIR__ . '/../app/cart_promo.php';
+        break;
+
+    case 'checkout':
+        view('checkout');
+        break;
+
     case 'submit_booking':
 
-        // Zabezpieczenie – tylko POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: index.php?page=workshop');
             exit;
         }
 
-        // Dane z formularza
         $data = [
             'customer_name' => $_POST['customer_name'] ?? '',
             'phone' => $_POST['phone'] ?? '',
@@ -106,18 +111,13 @@ switch ($page) {
             'note' => $_POST['note'] ?? ''
         ];
 
-        // Walidacja
         $errors = validateBooking($data);
 
         if ($errors) {
-            view('workshop', [
-                'errors' => $errors,
-                'old' => $data
-            ]);
+            view('workshop', ['errors' => $errors, 'old' => $data]);
             break;
         }
 
-        // Zapis do bazy
         $ok = createBooking(
             $data['customer_name'],
             $data['phone'],
@@ -127,9 +127,7 @@ switch ($page) {
         );
 
         if ($ok) {
-            view('booking_success', [
-                'booking' => $data
-            ]);
+            view('booking_success', ['booking' => $data]);
         } else {
             view('workshop', [
                 'errors' => ['Nie udało się zapisać rezerwacji.'],
@@ -138,7 +136,6 @@ switch ($page) {
         }
         break;
 
-    // ===== DOMYŚLNIE =====
     default:
         view('home');
         break;
