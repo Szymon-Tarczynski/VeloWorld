@@ -14,12 +14,11 @@ $wheel_size = $_GET['wheel_size'] ?? '';
 $q = trim($_GET['q'] ?? '');
 $view_mode = $_GET['view'] ?? 'classic';
 
-$currentUrl = $_SERVER['REQUEST_URI'] ?? 'index.php?page=shop';
-
 function queryWith(array $add = [], array $remove = []): string
 {
   $p = array_merge($_GET, $add);
-  foreach ($remove as $k) unset($p[$k]);
+  foreach ($remove as $k)
+    unset($p[$k]);
   return 'index.php?' . http_build_query($p);
 }
 
@@ -30,31 +29,14 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
 
 <main class="main-content">
 
-  <?php if (!empty($_SESSION['flash_cart_added'])): ?>
-    <div class="alert success" style="margin:10px 0;">✅ Dodano do koszyka</div>
-    <?php unset($_SESSION['flash_cart_added']); ?>
+  <!-- FLASH MESSAGES -->
+  <?php if (!empty($_SESSION['flash_added'])): ?>
+    <div class="alert success" style="margin:10px 0;">✅ Dodano do koszyka!</div>
+    <?php unset($_SESSION['flash_added']); ?>
   <?php endif; ?>
 
-  <?php if (!empty($_SESSION['flash_cart_error'])): ?>
-    <div class="alert error" style="margin:10px 0;">
-      <?php echo htmlspecialchars($_SESSION['flash_cart_error']); ?>
-    </div>
-    <?php unset($_SESSION['flash_cart_error']); ?>
-  <?php endif; ?>
-
-  <!-- SUB-BAR -->
+  <!-- SUB-BAR (bez przycisku koszyka) -->
   <div class="shop-sub-bar">
-    <button class="shop-icon-btn" id="cartBtn" onclick="toggleCart()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M2 2h1.5l2 7h7l1.5-5H5" stroke="white" stroke-width="1.4" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <circle cx="7" cy="13" r="1" fill="white" />
-        <circle cx="12" cy="13" r="1" fill="white" />
-      </svg>
-      Ulubione
-      <span class="shop-badge" id="cartBadge" style="display:none">0</span>
-    </button>
-
     <button class="shop-icon-btn" id="filterBtn" onclick="toggleFilters()">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <line x1="2" y1="4" x2="14" y2="4" stroke="white" stroke-width="1.4" stroke-linecap="round" />
@@ -64,11 +46,28 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
       Filtry
     </button>
 
+
     <a class="shop-icon-btn" id="tinderBtn"
       href="<?php echo queryWith(['view' => $view_mode === 'tinder' ? 'classic' : 'tinder']); ?>">
-      <?php echo $view_mode === 'tinder' ? 'Wróć do listy' : 'Tryb przeglądania (tinder)'; ?>
+      <?php echo $view_mode === 'tinder' ? 'Wróć do listy' : 'Tryb przeglądania'; ?>
     </a>
+
+    <?php if ($view_mode === 'tinder'): ?>
+      <button class="shop-icon-btn" id="cartBtn" onclick="toggleCart()">
+        ♥ Ulubione
+        <span class="shop-badge" id="cartBadge" style="display:none">0</span>
+      </button>
+    <?php endif; ?>
   </div>
+
+  <?php if ($view_mode === 'tinder'): ?>
+    <div class="shop-liked-panel glass" id="likedPanel">
+      <div class="slp-title">♥ <span id="likedTitle">Ulubione (0)</span></div>
+      <div id="likedContent">
+        <p class="slp-empty">Jeszcze nic nie polubiłeś</p>
+      </div>
+    </div>
+  <?php endif; ?>
 
   <!-- PANEL FILTRÓW -->
   <div class="shop-filter-panel glass" id="filterPanel">
@@ -153,16 +152,8 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
     </form>
   </div>
 
-  <!-- ULUBIONE -->
-  <div class="shop-liked-panel glass" id="likedPanel">
-    <div class="slp-title">♥ <span id="likedTitle">Ulubione (0)</span></div>
-    <div id="likedContent">
-      <p class="slp-empty">Jeszcze nic nie polubiłeś</p>
-    </div>
-  </div>
-
   <?php if ($view_mode === 'tinder'): ?>
-    <!-- TRYB TINDER (bez zmian) -->
+    <!-- TRYB TINDER -->
     <?php
     $js_bikes = [];
     if (!empty($products)) {
@@ -201,14 +192,11 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
           <div class="tinder-nope-ov" id="nopeOv">POMIJAM ✕</div>
         </div>
       </div>
-
       <div class="tinder-btns">
         <button class="tinder-btn skip" onclick="swipeAction('skip')">✕</button>
         <button class="tinder-btn like" onclick="swipeAction('like')">♥</button>
       </div>
-
       <p class="tinder-progress" id="tinderProgress">1 / ?</p>
-
       <div class="tinder-done" id="tinderDone" style="display:none">
         <p>🎉 Przejrzałeś wszystkie rowery!</p>
         <button class="btn" onclick="resetDeck()">Zacznij od nowa</button>
@@ -246,19 +234,16 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
         <ul class="product-grid">
           <?php foreach ($products as $p):
             $tags = !empty($p['tags_json']) ? json_decode($p['tags_json'], true) : [];
-          ?>
+            ?>
             <li class="product-card" data-gender="<?php echo htmlspecialchars($p['gender'] ?? ''); ?>">
 
               <div class="product-img">
                 <?php if (!empty($p['bike_type'])): ?>
-                  <div class="bike-type-label">
-                    <?php echo htmlspecialchars($p['bike_type']); ?>
-                  </div>
+                  <div class="bike-type-label"><?php echo htmlspecialchars($p['bike_type']); ?></div>
                 <?php endif; ?>
 
                 <?php if (!empty($p['image'])): ?>
-                  <img src="<?php echo htmlspecialchars($p['image']); ?>"
-                       alt="<?php echo htmlspecialchars($p['name']); ?>">
+                  <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['name']); ?>">
                 <?php else: ?>
                   <span class="product-emoji"><?php echo $p['emoji'] ?? '🚲'; ?></span>
                 <?php endif; ?>
@@ -288,25 +273,22 @@ $categories = ['rower' => 'Rowery', 'akcesoria' => 'Akcesoria', 'części' => 'C
                 <div class="price"><?php echo htmlspecialchars($p['price']); ?> zł</div>
 
                 <div class="product-actions" style="display:flex; gap:10px; flex-wrap:wrap;">
-                  <a class="btn" href="index.php?page=product&amp;id=<?php echo (int) $p['id']; ?>">
+                  <a class="btn" href="index.php?page=product&id=<?php echo (int) $p['id']; ?>">
                     Zobacz
                   </a>
 
-                  <!-- DODAJ DO KOSZYKA -->
+                  <!-- DODAJ DO KOSZYKA — przekierowuje do koszyka -->
                   <form method="POST" action="index.php?page=cart_action" style="margin:0;">
                     <input type="hidden" name="action" value="add">
-                    <input type="hidden" name="id" value="<?php echo (int)$p['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo (int) $p['id']; ?>">
                     <input type="hidden" name="qty" value="1">
-                    <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($currentUrl); ?>">
-
-                    <!-- fallback dane produktu (żeby działało nawet bez $pdo) -->
+                    <input type="hidden" name="redirect" value="index.php?page=cart">
                     <input type="hidden" name="name" value="<?php echo htmlspecialchars($p['name']); ?>">
-                    <input type="hidden" name="price" value="<?php echo htmlspecialchars((string)((float)$p['price'])); ?>">
+                    <input type="hidden" name="price" value="<?php echo htmlspecialchars((string) ((float) $p['price'])); ?>">
                     <input type="hidden" name="image" value="<?php echo htmlspecialchars($p['image'] ?? ''); ?>">
                     <input type="hidden" name="bike_type" value="<?php echo htmlspecialchars($p['bike_type'] ?? ''); ?>">
                     <input type="hidden" name="emoji" value="<?php echo htmlspecialchars($p['emoji'] ?? '🚲'); ?>">
-
-                    <button type="submit" class="btn">Dodaj do koszyka</button>
+                    <button type="submit" class="btn btn-primary">Dodaj do koszyka</button>
                   </form>
                 </div>
 

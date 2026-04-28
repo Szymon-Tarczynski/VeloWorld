@@ -1,0 +1,290 @@
+/* =============================================
+   checkout.css – VeloWorld Płatność
+   ============================================= */
+
+/* ── BREADCRUMB (reuse z cart.css) ────────────── */
+.cart-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.cart-breadcrumb a { color: var(--text-muted); text-decoration: none; transition: opacity 0.15s; }
+.cart-breadcrumb a:hover { opacity: 1; color: white; }
+.cart-breadcrumb .current { color: var(--text-main); }
+.cart-breadcrumb span { color: var(--text-muted); }
+
+/* ── LAYOUT ───────────────────────────────────── */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
+}
+.checkout-right {
+  position: sticky;
+  top: 80px;
+}
+
+/* ── PANEL ────────────────────────────────────── */
+.checkout-panel { overflow: hidden; }
+.cp-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.cp-title { font-size: 1.2rem; font-weight: 700; color: var(--text-main); }
+
+/* ── METODY PŁATNOŚCI ─────────────────────────── */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 24px;
+}
+
+.pm-card {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.pm-card.active {
+  border-color: var(--accent);
+  background: rgba(79,92,255,0.06);
+}
+.pm-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+}
+
+/* Nieaktywne */
+.pm-card.pm-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.pm-card.pm-disabled:hover {
+  border-color: var(--border);
+  background: rgba(255,255,255,0.03);
+  opacity: 0.65;
+}
+
+/* Logo */
+.pm-logo {
+  width: 48px; height: 32px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.blik-logo  { background: #ef4444; color: white; }
+.card-logo  { background: rgba(255,255,255,0.08); font-size: 1.3rem; }
+.p24-logo   { background: #c0392b; color: white; font-size: 0.65rem; }
+.paypo-logo { background: #f59e0b; color: white; font-size: 0.6rem; }
+
+/* Info */
+.pm-info { flex: 1; }
+.pm-name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+.pm-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+/* Check */
+.pm-check {
+  width: 22px; height: 22px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  color: white;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Wkrótce */
+.pm-soon {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ── BLIK INPUT ───────────────────────────────── */
+.blik-input-wrap {
+  padding: 0 18px 18px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 0;
+}
+.blik-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  margin-top: 14px;
+}
+.blik-digits { display: flex; gap: 8px; justify-content: center; }
+.blik-field {
+  width: 100%;
+  max-width: 260px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid var(--border);
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.blik-field:focus { border-color: var(--accent); }
+.blik-field.error { border-color: #f87171; }
+.blik-field::placeholder { letter-spacing: 0.25em; opacity: 0.3; }
+.blik-error {
+  color: #f87171;
+  font-size: 0.78rem;
+  margin-top: 8px;
+  text-align: center;
+}
+.blik-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ── DISABLED MSG ─────────────────────────────── */
+.disabled-msg {
+  margin: 0 24px 10px;
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: #fca5a5;
+  animation: fadeUp 0.2s ease;
+}
+
+/* ── SUBMIT ───────────────────────────────────── */
+.checkout-submit-wrap {
+  padding: 16px 24px 24px;
+  border-top: 1px solid var(--border);
+}
+.checkout-pay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+  font-family: inherit;
+}
+.checkout-pay-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.checkout-pay-btn:active { transform: none; }
+
+.continue-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.79rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+.continue-link:hover { opacity: 1; color: white; }
+
+/* ── SUMMARY PANEL (reuse) ────────────────────── */
+.summary-panel { padding: 24px; }
+.sp-title { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
+
+.co-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.co-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+.co-emoji { font-size: 1.1rem; flex-shrink: 0; }
+.co-name  { flex: 1; color: var(--text-main); font-weight: 500;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.co-qty   { color: var(--text-muted); font-size: 0.75rem; flex-shrink: 0; }
+.co-price { color: var(--text-main); font-weight: 600; flex-shrink: 0; }
+
+.sp-divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+.sp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 9px;
+}
+.sp-val { color: var(--text-main); font-weight: 500; }
+.sp-discount { color: #4ade80; }
+.sp-total {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.sp-total-val { color: var(--accent); font-size: 1.1rem; }
+
+.co-secure {
+  margin-top: 16px;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ── ANIMACJA ─────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.checkout-left  { animation: fadeUp 0.3s ease both; }
+.checkout-right { animation: fadeUp 0.3s 0.07s ease both; }
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width: 900px) {
+  .checkout-layout { grid-template-columns: 1fr; }
+  .checkout-right  { position: static; }
+  .cp-header       { padding: 18px 16px 14px; }
+  .payment-methods { padding: 14px 12px; }
+  .checkout-submit-wrap { padding: 14px 12px 20px; }
+}

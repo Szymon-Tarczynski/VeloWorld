@@ -1,0 +1,81 @@
+/* ── HERO ───────────────────────── */
+.guide-hero {
+  display: flex; align-items: center; gap: 24px;
+  padding: 32px 36px; margin-bottom: 40px;
+}
+.guide-hero-icon { font-size: 3rem; flex-shrink: 0; }
+.guide-hero-title { font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+.guide-hero-sub { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+/* ── SECTION ────────────────────── */
+.guide-section { margin-bottom: 48px; }
+.guide-section-title {
+  font-size: 1.2rem; font-weight: 700; color: var(--text-main);
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── STEPS ──────────────────────── */
+.guide-steps { display: flex; flex-direction: column; gap: 14px; }
+.guide-step {
+  display: grid; grid-template-columns: 56px 1fr;
+  gap: 24px; padding: 24px;
+}
+.guide-step-num {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: rgba(79,92,255,0.15);
+  color: #8b97ff; font-weight: 800; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.guide-step-body h3 { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+.guide-step-body p  { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
+
+/* tip / warning */
+.guide-tip, .guide-warning {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-top: 12px; padding: 12px 14px; border-radius: 8px;
+  font-size: 0.8rem; line-height: 1.5;
+}
+.guide-tip     { background: rgba(79,92,255,0.08); border: 1px solid rgba(79,92,255,0.2); color: #a5b4fc; }
+.guide-warning { background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.2); color: #fcd34d; }
+.tip-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+/* kolory */
+.guide-colors { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.color-chip {
+  padding: 7px 14px; border-radius: 8px; font-size: 0.72rem;
+  font-weight: 600; color: white; letter-spacing: 0.03em;
+}
+.guide-colors-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 8px; }
+
+/* ── INFO CARDS ─────────────────── */
+.guide-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.guide-info-card { padding: 22px; }
+.gic-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.guide-info-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+.guide-info-card p  { font-size: 0.8rem; color: var(--text-muted); line-height: 1.65; }
+
+/* ── CTA ────────────────────────── */
+.guide-cta {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; padding: 28px 32px; margin-top: 16px;
+  background: rgba(79,92,255,0.07); border-color: rgba(79,92,255,0.25);
+}
+.guide-cta-text h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+.guide-cta-text p  { font-size: 0.83rem; color: var(--text-muted); }
+.guide-cta-btn { white-space: nowrap; padding: 11px 22px; }
+
+/* ── RESPONSIVE ─────────────────── */
+@media (max-width: 900px) {
+  .guide-cards { grid-template-columns: repeat(2, 1fr); }
+  .guide-hero { flex-direction: column; text-align: center; padding: 24px; }
+  .guide-cta { flex-direction: column; text-align: center; }
+}
+@media (max-width: 560px) {
+  .guide-cards { grid-template-columns: 1fr; }
+  .guide-step  { grid-template-columns: 1fr; }
+  .guide-step-num { width: 40px; height: 40px; }
+}

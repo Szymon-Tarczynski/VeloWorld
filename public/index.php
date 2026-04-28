@@ -136,6 +136,18 @@ switch ($page) {
         }
         break;
 
+    case 'about':
+        view('about');
+        break;
+
+         case 'malowanie':
+        view('malowanie');
+        break;
+
+    case 'order_success':
+        view('order_success');
+        break;
+
     default:
         view('home');
         break;
