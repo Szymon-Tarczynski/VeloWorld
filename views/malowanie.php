@@ -1,13 +1,16 @@
 <?php
 // views/guides/malowanie.php
 $pageTitle = 'VeloWorld – Malowanie i oklejanie roweru';
-$pageCss   = 'service_guide.css'; // reużywamy istniejący styl poradników
-$pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
+$pageCss = 'service_guide.css';
+$pageCss2 = 'malowanie.css';
+$pageCss3 = 'lightbox.css';
 ?>
 
 <?php include 'partials/topbar.php'; ?>
 
 <main class="main-content">
+
+  <!-- HERO -->
   <div class="guide-hero glass">
     <div class="guide-hero-icon">🎨</div>
     <div class="guide-hero-text">
@@ -98,7 +101,7 @@ $pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
     </div>
   </div>
 
-  <!-- ════ SEKCJA 2: Oklejanie ════ -->
+  <!-- ════ SEKCJA 2: Oklejanie folią ochronną (PPF) ════ -->
   <div class="guide-section">
     <h2 class="guide-section-title">Oklejanie folią ochronną (PPF)</h2>
 
@@ -162,12 +165,14 @@ $pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
     </div>
   </div>
 
+
+
   <!-- ════ SEKCJA 3: Naklejki dekoracyjne ════ -->
   <div class="guide-section">
     <h2 class="guide-section-title">Naklejki dekoracyjne i decale</h2>
 
-    <div class="guide-step glass" style="margin-bottom:14px;">
-      <div class="guide-step-num" style="background:rgba(255,200,0,0.15);color:#fcd34d;">★</div>
+    <!-- KALKOMANIE -->
+    <div class="guide-step glass" style="grid-template-columns:1fr;">
       <div class="guide-step-body">
         <h3>Decale (kalkomanie wodne)</h3>
         <p>
@@ -176,11 +181,40 @@ $pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
           Wymaga lakierowania na wierzchu dla trwałości. Efekt: profesjonalne logo producenta
           lub własny wzór zamówiony w drukarni (~50 zł za arkusz A4).
         </p>
+
+        <!-- ZDJĘCIA + OPISY -->
+        <div class="stickers-grid">
+
+          <figure class="sticker-item">
+            <img src="img/stickers/decal1.png" alt="Decal Classic Logo">
+            <figcaption>
+              <span class="sticker-name">Zestaw naklejek 1</span>
+              <span class="sticker-price">23 zł</span>
+            </figcaption>
+          </figure>
+
+          <figure class="sticker-item">
+            <img src="img/stickers/decal2.png" alt="Decal Retro Badge">
+            <figcaption>
+              <span class="sticker-name">Zestaw naklejek 2</span>
+              <span class="sticker-price">20 zł</span>
+            </figcaption>
+          </figure>
+
+          <figure class="sticker-item">
+            <img src="img/stickers/decal3.png" alt="Decal Custom A4">
+            <figcaption>
+              <span class="sticker-name">Kwiatki</span>
+              <span class="sticker-price">14 zł</span>
+            </figcaption>
+          </figure>
+
+        </div>
       </div>
     </div>
 
-    <div class="guide-step glass">
-      <div class="guide-step-num" style="background:rgba(255,200,0,0.15);color:#fcd34d;">★</div>
+    <!-- WINYL -->
+    <div class="guide-step glass" style="grid-template-columns:1fr;">
       <div class="guide-step-body">
         <h3>Naklejki winylowe</h3>
         <p>
@@ -188,6 +222,36 @@ $pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
           Folia matowa lub połyskująca, od 30 zł za zestaw. Naklejaj od środka wzoru
           na zewnątrz, odpowietrzając na bieżąco. Trwałość: 3–5 lat na zewnątrz.
         </p>
+
+        <!-- ZDJĘCIA + OPISY -->
+        <div class="stickers-grid">
+
+          <figure class="sticker-item">
+            <img src="img/stickers/vinyl1.png" alt="Vinyl White Set">
+            <figcaption>
+              <span class="sticker-name">Vinyl White Set</span>
+              <span class="sticker-price">30 zł</span>
+            </figcaption>
+          </figure>
+
+          <figure class="sticker-item">
+            <img src="img/stickers/vinyl2.png" alt="Vinyl Neon Set">
+            <figcaption>
+              <span class="sticker-name">Vinyl Neon Set</span>
+              <span class="sticker-price">39 zł</span>
+            </figcaption>
+          </figure>
+
+          <figure class="sticker-item">
+            <img src="img/stickers/vinyl3.png" alt="Vinyl Custom Cut">
+            <figcaption>
+              <span class="sticker-name">Custom Cut</span>
+              <span class="sticker-price">od 30 zł</span>
+            </figcaption>
+          </figure>
+
+        </div>
+
         <div class="guide-tip">
           <span class="tip-icon">💡</span>
           Naklejki na ramę dobrze wyglądają jako kontrast do koloru ramy — jasne wzory
@@ -196,6 +260,39 @@ $pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
       </div>
     </div>
   </div>
+
+
+
+  <!-- ✅ LIGHTBOX + LUPA (DODANE – wklej raz) -->
+  <div class="sticker-lightbox" id="stickerLightbox" aria-hidden="true">
+    <div class="sticker-lightbox__backdrop" data-close></div>
+
+    <div class="sticker-lightbox__panel glass" role="dialog" aria-modal="true" aria-label="Podgląd naklejki">
+
+      <!-- X (zamykanie) -->
+      <button class="sticker-lightbox__close" type="button" data-close aria-label="Zamknij">✕</button>
+
+      <!-- Toolbar – ZOSTAJE TYLKO TYTUŁ -->
+      <div class="sticker-lightbox__toolbar">
+        <div class="sticker-lightbox__title" id="stickerLightboxTitle">
+          Podgląd naklejki
+        </div>
+      </div>
+
+      <!-- Obraz + lupa -->
+      <div class="sticker-lightbox__stage" id="stickerStage">
+        <img class="sticker-lightbox__img" id="stickerLightboxImg" alt="Naklejka" />
+        <div class="sticker-lens" id="stickerLens" aria-hidden="true"></div>
+      </div>
+
+      <!-- Okno powiększenia -->
+      <div class="sticker-zoom" id="stickerZoom" aria-hidden="true"></div>
+
+    </div>
+  </div>
+
+
+
 
   <!-- ════ CTA ════ -->
   <div class="guide-cta glass">
@@ -208,4 +305,4 @@ $pageCss2   = 'malowanie.css'; // reużywamy istniejący styl poradników
 
 </main>
 
-<style>
+<?php include 'partials/footer.php'; ?>

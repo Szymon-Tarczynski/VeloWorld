@@ -84,6 +84,10 @@ switch ($page) {
         view('cart');
         break;
 
+    case 'creator':
+        view('creator');
+        break;
+
     case 'cart_action':
         require __DIR__ . '/../app/cart_action.php';
         break;
@@ -140,7 +144,7 @@ switch ($page) {
         view('about');
         break;
 
-         case 'malowanie':
+    case 'malowanie':
         view('malowanie');
         break;
 

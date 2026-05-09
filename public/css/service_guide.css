@@ -70,15 +70,3 @@
   line-height: 1.5;
 }
 
-/* Opis kroku */
-
-/* --- CTA --- */
-.guide-cta {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-top: 16px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}

@@ -13,6 +13,10 @@
   --footer-text: #ffffff;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 /* =============================================
    RESET I BAZA
    ============================================= */
@@ -27,6 +31,7 @@
 html {
   background: radial-gradient(circle at 50% 20%, #2a2f7a, #0b0f2a 60%);
   min-height: 100%;
+  overflow-y: scroll;
 }
 
 body {
@@ -75,7 +80,8 @@ a:hover {
 .navbar {
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -398,11 +404,12 @@ footer {
 /* =============================================
    SLIDER
    ============================================= */
-.guide-slider {
+
+.slider {
   margin-bottom: 24px;
 }
 
-.guide-slider-nav {
+.slider-nav {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -410,7 +417,7 @@ footer {
   margin-bottom: 16px;
 }
 
-.guide-arrow {
+.slider-arrow {
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -425,12 +432,12 @@ footer {
   transition: background 0.15s, border-color 0.15s;
 }
 
-.guide-arrow:hover {
+.slider-arrow:hover {
   background: var(--accent);
   border-color: var(--accent);
 }
 
-.guide-counter {
+.slider-counter {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-muted);
@@ -438,24 +445,25 @@ footer {
   text-align: center;
 }
 
-.guide-slider-window {
+.slider-window {
   overflow: hidden;
   border-radius: 12px;
   background: transparent;
   backdrop-filter: none;
 }
 
-.guide-slider-track {
+.slider-track {
   display: flex;
   transition: transform 0.35s ease;
 }
 
-.guide-slide {
+.slider-slide {
   min-width: 100%;
   box-sizing: border-box;
 }
 
-.guide-card {
+/* Optional: jeśli slajdy są kartami */
+.slider-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -466,22 +474,23 @@ footer {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
-.guide-card-title {
+.slider-card-title {
   font-size: 1.15rem;
   margin-bottom: 16px;
 }
 
-.guide-title {
+.slider-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 8px;
 }
 
-.guide-intro {
+.slider-intro {
   color: var(--text-muted);
   font-size: 0.97rem;
   margin-bottom: 28px;
 }
+
 
 /* =============================================
    FLOATING CART 
@@ -709,4 +718,17 @@ footer {
   .main-content {
     padding: 20px 16px;
   }
+}
+
+
+/* ── RESPONSIVE ─────────────────── */
+@media (max-width: 900px) {
+  .guide-cards { grid-template-columns: repeat(2, 1fr); }
+  .guide-hero { flex-direction: column; text-align: center; padding: 24px; }
+  .guide-cta { flex-direction: column; text-align: center; }
+}
+@media (max-width: 560px) {
+  .guide-cards { grid-template-columns: 1fr; }
+  .guide-step  { grid-template-columns: 1fr; }
+  .guide-step-num { width: 40px; height: 40px; }
 }

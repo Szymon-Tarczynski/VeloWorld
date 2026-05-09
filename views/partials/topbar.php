@@ -14,6 +14,7 @@ $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
 
   <link rel="stylesheet" href="css/style.css?v=12">
   <link rel="stylesheet" href="css/search-bar.css?v=1">
+  <link rel="stylesheet" href="css/guide-cta.css?v=1">
 
   <?php if (!empty($pageCss)): ?>
     <link rel="stylesheet" href="css/<?php echo $pageCss; ?>?v=11">
@@ -23,8 +24,15 @@ $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
     <link rel="stylesheet" href="css/<?php echo $pageCss2; ?>?v=11">
   <?php endif; ?>
 
+  <?php if (!empty($pageCss3)): ?>
+    <link rel="stylesheet" href="css/<?php echo $pageCss3; ?>?v=11">
+  <?php endif; ?>
+
   <script src="js/app.js?v=2" defer></script>
+  <script src="js/stickers-lightbox.js?v=1" defer></script>
   <script src="js/calcFrame.js?v=2" defer></script>
+  <script src="js/creator.js?v=1" defer></script>
+  <script src="js/slider.js?v=1" defer></script>
   <script src="js/site-search.js?v=1" defer></script>
   <script src="js/shop.js?v=2" defer></script>
 </head>
@@ -58,6 +66,7 @@ $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
       <a href="index.php?page=workshop" <?php echo in_array($currentPage, ['workshop', 'submit_booking', 'booking_success']) ? 'class="active"' : ''; ?>>Warsztat</a>
       <a href="index.php?page=clients" <?php echo ($currentPage === 'clients') ? 'class="active"' : ''; ?>>Klienci</a>
       <a href="index.php?page=malowanie" <?php echo ($currentPage === 'malowanie') ? 'class="active"' : ''; ?>> Malowanie i oklejanie</a>
+      <a href="index.php?page=creator" <?php echo ($currentPage === 'creator') ? 'class="active"' : ''; ?>>Skonfiguruj rower</a>
 
       <div class="dropdown">
         <a href="index.php?page=faults" class="dropdown-toggle">Najczęstsze usterki <span class="caret">▾</span></a>

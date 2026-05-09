@@ -1,0 +1,123 @@
+/* ─────────────────────────────────────────
+   LIGHTBOX + LUPA — FINAL FINAL
+   (CAŁA NAKLEJKA, BRAK WYJEŻDŻANIA)
+   ───────────────────────────────────────── */
+
+.sticker-lightbox {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 2000;
+}
+
+.sticker-lightbox.is-open {
+    display: block;
+}
+
+.sticker-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+/* PANEL */
+.sticker-lightbox__panel {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(980px, 92vw);
+    max-height: 86vh;
+    padding: 18px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+/* CLOSE */
+.sticker-lightbox__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    cursor: pointer;
+}
+
+/* TOOLBAR */
+.sticker-lightbox__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 56px 14px 6px;
+}
+
+/* STAGE – BRAK height */
+.sticker-lightbox__stage {
+    position: relative;
+    max-height: 70vh;
+    /* ✅ LIMIT, NIE WYMUSZENIE */
+    overflow: auto;
+    /* ✅ całość widoczna */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* ✅ KLUCZ: OBRAZ SAM DOBIERA ROZMIAR */
+.sticker-lightbox__img {
+    max-width: 100%;
+    max-height: 70vh;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+}
+
+/* LUPA */
+.sticker-lens {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+    display: none;
+}
+
+/* ZOOM */
+.sticker-zoom {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    width: 260px;
+    height: 260px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background-repeat: no-repeat;
+    background-size: 200% 200%;
+    display: none;
+}
+
+/* MOBILE */
+@media (max-width: 720px) {
+    .sticker-zoom {
+        position: static;
+        width: 100%;
+        height: 220px;
+        margin-top: 12px;
+    }
+}
+
+body.modal-lock {
+    overflow: hidden;
+}

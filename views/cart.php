@@ -1,3 +1,5 @@
+
+
 <?php
 // views/cart.php
 if (session_status() === PHP_SESSION_NONE) {
@@ -70,7 +72,7 @@ $count    = array_sum(array_column($cart, 'qty'));
         <?php else: ?>
           <ul class="cart-items" id="cartItems">
             <?php foreach ($cart as $item): ?>
-              <li class="ci-row" id="ci-<?= (int)$item['id'] ?>">
+              <li class="ci-row" id="ci-<?= htmlspecialchars($item['id']) ?>">
 
                 <div class="ci-thumb">
                   <?php if (!empty($item['image'])): ?>
@@ -98,10 +100,11 @@ $count    = array_sum(array_column($cart, 'qty'));
                   </div>
 
                   <div class="ci-controls">
+
                     <!-- Zmień ilość -->
                     <form method="POST" action="index.php?page=cart_action" class="qty-form">
                       <input type="hidden" name="action"   value="update">
-                      <input type="hidden" name="id"       value="<?= (int)$item['id'] ?>">
+                      <input type="hidden" name="id"       value="<?= htmlspecialchars($item['id']) ?>">
                       <input type="hidden" name="redirect" value="index.php?page=cart">
                       <div class="qty-wrap">
                         <button type="submit" name="qty" value="<?= $item['qty'] - 1 ?>" class="qty-btn">−</button>
@@ -113,7 +116,7 @@ $count    = array_sum(array_column($cart, 'qty'));
                     <!-- Usuń -->
                     <form method="POST" action="index.php?page=cart_action">
                       <input type="hidden" name="action"   value="remove">
-                      <input type="hidden" name="id"       value="<?= (int)$item['id'] ?>">
+                      <input type="hidden" name="id"       value="<?= htmlspecialchars($item['id']) ?>">
                       <input type="hidden" name="redirect" value="index.php?page=cart">
                       <button type="submit" class="ci-remove" title="Usuń">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -124,6 +127,7 @@ $count    = array_sum(array_column($cart, 'qty'));
                         </svg>
                       </button>
                     </form>
+
                   </div>
                 </div>
 
@@ -191,30 +195,11 @@ $count    = array_sum(array_column($cart, 'qty'));
           </span>
         </div>
 
-        <?php if ($shipping === 0): ?>
-          <div class="sp-free-ship">
-            <span>🚚</span>
-            <span>Darmowa dostawa!</span>
-          </div>
-        <?php else: ?>
-          <div class="sp-ship-bar-wrap">
-            <div class="sp-ship-bar-label">
-              Brakuje <strong><?= number_format(299 - $subtotal, 2, ',', ' ') ?> zł</strong>
-              do darmowej dostawy
-            </div>
-            <div class="sp-ship-bar">
-              <div class="sp-ship-fill"
-                   style="width:<?= min(100, round($subtotal / 299 * 100)) ?>%"></div>
-            </div>
-          </div>
-        <?php endif; ?>
-
         <div class="sp-row sp-total">
           <span>Łącznie</span>
           <span class="sp-total-val"><?= number_format($total, 2, ',', ' ') ?> zł</span>
         </div>
 
-        <!-- Przycisk do checkoutu -->
         <a href="index.php?page=checkout" class="checkout-btn">
           Przejdź do płatności
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
