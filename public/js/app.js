@@ -27,65 +27,74 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // --- KOSZYK (localStorage) ---
-  const CART_KEY = 'cart';
-
-  function loadCart() {
-    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
-    catch { return []; }
-  }
-
-  function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  }
-
+  // --- KOSZYK (SESSION przez cart_action.php) ---
+  // UWAGA: to ma obsługiwać sklepowe .add-to-cart (a nie konfigurator).
   document.addEventListener('click', (e) => {
-    if (!e.target.matches('.add-to-cart')) return;
-    const btn = e.target;
+    const btn = e.target.closest('.add-to-cart');
+    if (!btn) return;
 
-    const item = {
-      id: Number(btn.dataset.id),
-      name: btn.dataset.name,
-      price: Number(btn.dataset.price),
-      qty: 1
-    };
+    const id = String(btn.dataset.id || '');
+    const name = String(btn.dataset.name || '');
+    const price = String(btn.dataset.price || '0');
 
-    const cart = loadCart();
-    const existing = cart.find(p => p.id === item.id);
-    if (existing) existing.qty += 1;
-    else cart.push(item);
+    if (!id || !name) {
+      console.warn('Brak data-id lub data-name na przycisku .add-to-cart');
+      return;
+    }
 
-    saveCart(cart);
-    alert('Dodano do koszyka: ' + item.name);
+    const params = new URLSearchParams();
+    params.set('action', 'add');
+    params.set('id', id);
+    params.set('name', name);
+    params.set('price', price);
+    params.set('qty', '1');
+    params.set('redirect', 'index.php?page=shop');
+
+    fetch('index.php?page=cart_action', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept': 'application/json'
+      },
+      body: params.toString()
+    })
+      .then(r => r.json().catch(() => ({})))
+      .then(() => {
+        alert('Dodano do koszyka: ' + name);
+      })
+      .catch(err => {
+        console.error('cart_action error:', err);
+        alert('Błąd dodawania do koszyka.');
+      });
   });
 
   // --- AUDIO ---
-  document.addEventListener("click", function (e) {
-    const btn = e.target.closest(".audio-btn");
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.audio-btn');
     if (!btn) return;
 
     const audio = document.getElementById(btn.dataset.audio);
     if (!audio) return;
 
     // zatrzymaj wszystkie inne audio
-    document.querySelectorAll(".audio-el").forEach(a => {
+    document.querySelectorAll('.audio-el').forEach(a => {
       if (a !== audio) a.pause();
     });
-    document.querySelectorAll(".audio-btn").forEach(b => {
-      if (b !== btn) b.classList.remove("playing");
+    document.querySelectorAll('.audio-btn').forEach(b => {
+      if (b !== btn) b.classList.remove('playing');
     });
 
     // play / pause
     if (audio.paused) {
       audio.play();
-      btn.classList.add("playing");
+      btn.classList.add('playing');
     } else {
       audio.pause();
-      btn.classList.remove("playing");
+      btn.classList.remove('playing');
     }
 
-    // po zakończeniu wróć do play
-    audio.onended = () => btn.classList.remove("playing");
+    audio.onended = () => btn.classList.remove('playing');
   });
 
-});
+}); // ✅ DOMContentLoaded domknięty poprawnie

@@ -1,5 +1,3 @@
-
-
 <?php
 // views/cart.php
 if (session_status() === PHP_SESSION_NONE) {
@@ -9,14 +7,20 @@ if (session_status() === PHP_SESSION_NONE) {
 $pageTitle = 'VeloWorld – Koszyk';
 $pageCss   = 'cart.css';
 
-if (!isset($_SESSION['cart'])) {
+if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-$cart     = $_SESSION['cart'];
+$cart = $_SESSION['cart'];
+
+/* ✅ POPRAWIONE LICZENIE (działa dla tablic asocjacyjnych) */
 $subtotal = 0;
+$count    = 0;
 foreach ($cart as $item) {
-    $subtotal += $item['price'] * $item['qty'];
+    $qty    = (int)($item['qty'] ?? 0);
+    $price = (float)($item['price'] ?? 0);
+    $subtotal += $price * $qty;
+    $count    += $qty;
 }
 
 $promo_code     = $_SESSION['cart_promo'] ?? '';
@@ -27,7 +31,6 @@ if ($promo_code === 'VELO10') {
 
 $shipping = ($subtotal > 0 && $subtotal >= 299) ? 0 : 19.99;
 $total    = $subtotal - $promo_discount + $shipping;
-$count    = array_sum(array_column($cart, 'qty'));
 ?>
 
 <?php include 'partials/topbar.php'; ?>

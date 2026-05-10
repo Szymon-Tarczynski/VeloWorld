@@ -1,18 +1,29 @@
 <?php
 // app/cart_action.php
-// TYLKO operacje na koszyku, nigdy widok
+// operacje na koszyku – spójne dla ID string + numeric
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 $_SESSION['cart'] ??= [];
+if (!is_array($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 
-$action = $_POST['action'] ?? '';
-$id     = (int)($_POST['id'] ?? 0);
-$qty    = max(1, (int)($_POST['qty'] ?? 1));
+$action   = $_POST['action'] ?? '';
+$id       = (string)($_POST['id'] ?? '');
+$qty      = (int)($_POST['qty'] ?? 1);
+$qty      = max(1, $qty);
+$redirect = $_POST['redirect'] ?? 'index.php?page=cart';
+
+$isAjax = false;
+$accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) $isAjax = true;
+if (stripos($accept, 'application/json') !== false) $isAjax = true;
 
 if ($action === '') {
+    if ($isAjax) { echo json_encode(['ok'=>false,'error'=>'no action']); exit; }
     header('Location: index.php?page=cart');
     exit;
 }
@@ -20,9 +31,8 @@ if ($action === '') {
 switch ($action) {
 
     case 'add':
-        if ($id <= 0) break;
+        if ($id === '') break;
 
-        // dane produktu zawsze z POST (pewne i działa)
         $name  = trim($_POST['name'] ?? '');
         $price = (float)($_POST['price'] ?? 0);
         $image = $_POST['image'] ?? '';
@@ -35,7 +45,7 @@ switch ($action) {
             $_SESSION['cart'][$id]['qty'] += $qty;
         } else {
             $_SESSION['cart'][$id] = [
-                'id'        => $id,
+                'id'        => $id,     // ✅ string lub numeric jako string
                 'name'      => $name,
                 'price'     => $price,
                 'image'     => $image,
@@ -47,13 +57,15 @@ switch ($action) {
         break;
 
     case 'update':
-        if ($id > 0 && isset($_SESSION['cart'][$id])) {
+        if ($id !== '' && isset($_SESSION['cart'][$id])) {
             $_SESSION['cart'][$id]['qty'] = max(1, $qty);
         }
         break;
 
     case 'remove':
-        unset($_SESSION['cart'][$id]);
+        if ($id !== '') {
+            unset($_SESSION['cart'][$id]);
+        }
         break;
 
     case 'clear':
@@ -61,6 +73,17 @@ switch ($action) {
         break;
 }
 
-// ✅ ZAWSZE do widoku koszyka
-header('Location: index.php?page=cart');
+$count = 0;
+foreach ($_SESSION['cart'] as $row) {
+    $count += (int)($row['qty'] ?? 0);
+}
+
+if ($isAjax) {
+    header('Content-Type: application/json');
+    echo json_encode(['ok' => true, 'count' => $count]);
+    exit;
+}
+
+// domyślnie: formularze -> redirect
+header('Location: ' . $redirect);
 exit;

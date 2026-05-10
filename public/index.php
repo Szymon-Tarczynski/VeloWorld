@@ -1,11 +1,16 @@
 <?php
 // VeloWorld – router (?page=...)
 
+// ✅ jedna sesja dla całej aplikacji
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // logika aplikacji
 require_once __DIR__ . '/../app/products.php';
 require_once __DIR__ . '/../app/bookings.php';
 
-// stała do widoków (żeby nie liczyć ../ w widokach)
+// stała do widoków
 define('VIEWS_PATH', realpath(__DIR__ . '/../views'));
 
 function view(string $name, array $data = []): void
@@ -24,12 +29,12 @@ switch ($page) {
 
     case 'shop':
         $products = getProducts([
-            'category' => $_GET['category'] ?? '',
-            'gender' => $_GET['gender'] ?? '',
-            'bike_type' => $_GET['bike_type'] ?? '',
+            'category'   => $_GET['category'] ?? '',
+            'gender'     => $_GET['gender'] ?? '',
+            'bike_type'  => $_GET['bike_type'] ?? '',
             'frame_size' => $_GET['frame_size'] ?? '',
             'wheel_size' => $_GET['wheel_size'] ?? '',
-            'q' => trim($_GET['q'] ?? ''),
+            'q'          => trim($_GET['q'] ?? ''),
         ]);
         view('shop', ['products' => $products]);
         break;
@@ -47,15 +52,14 @@ switch ($page) {
             }
 
             http_response_code(404);
-            view('home'); // możesz podmienić na własny widok 404
+            view('home');
             break;
         }
 
-        view('guides'); // główna strona poradników
+        view('guides');
         break;
     }
 
-    // reszta stron tak jak masz:
     case 'faults':
         view('faults');
         break;
@@ -88,13 +92,19 @@ switch ($page) {
         view('creator');
         break;
 
+    // ✅ operacje koszyka (formularze + sklep)
     case 'cart_action':
         require __DIR__ . '/../app/cart_action.php';
-        break;
+        exit;
 
     case 'cart_promo':
         require __DIR__ . '/../app/cart_promo.php';
-        break;
+        exit;
+
+    // ✅ endpoint dla konfiguratora (sync localStorage -> session)
+    case 'cart_add_creator':
+        require __DIR__ . '/../app/cart_add_creator.php';
+        exit;
 
     case 'checkout':
         view('checkout');
@@ -109,10 +119,10 @@ switch ($page) {
 
         $data = [
             'customer_name' => $_POST['customer_name'] ?? '',
-            'phone' => $_POST['phone'] ?? '',
-            'service' => $_POST['service'] ?? '',
-            'date' => $_POST['date'] ?? '',
-            'note' => $_POST['note'] ?? ''
+            'phone'         => $_POST['phone'] ?? '',
+            'service'       => $_POST['service'] ?? '',
+            'date'          => $_POST['date'] ?? '',
+            'note'          => $_POST['note'] ?? ''
         ];
 
         $errors = validateBooking($data);
@@ -135,7 +145,7 @@ switch ($page) {
         } else {
             view('workshop', [
                 'errors' => ['Nie udało się zapisać rezerwacji.'],
-                'old' => $data
+                'old'    => $data
             ]);
         }
         break;
