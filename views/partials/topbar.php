@@ -1,6 +1,7 @@
 <?php
 // partials/topbar.php
-if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+if (!isset($_SESSION['cart']))
+  $_SESSION['cart'] = [];
 $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
 ?>
 <!doctype html>
@@ -29,12 +30,28 @@ $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
   <?php endif; ?>
 
   <script src="js/app.js?v=2" defer></script>
+  <script src="js/basket-viewer.js?v=1" defer></script>
   <script src="js/stickers-lightbox.js?v=1" defer></script>
+  <script src="js/article-lightbox.js?v=1" defer></script>
   <script src="js/calcFrame.js?v=2" defer></script>
   <script src="js/creator.js?v=1" defer></script>
   <script src="js/slider.js?v=1" defer></script>
   <script src="js/site-search.js?v=1" defer></script>
   <script src="js/shop.js?v=2" defer></script>
+
+  <!-- =====================================================
+     IMPORT MAP – wymagany przez Firefox i nowoczesne Three.js
+     MUSI być w <head>, PRZED jakimikolwiek <script type="module">
+     ===================================================== -->
+  <script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+
+</script>
 </head>
 
 <body>
@@ -60,13 +77,18 @@ $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
     <!-- LINKI -->
     <div class="nav-links">
       <a href="index.php?page=home" <?php echo ($currentPage === 'home') ? 'class="active"' : ''; ?>>Start</a>
-      <a href="index.php?page=frame_guide" <?php echo ($currentPage === 'frame_guide') ? 'class="active"' : ''; ?>>Dobór ramy</a>
+      <a href="index.php?page=frame_guide" <?php echo ($currentPage === 'frame_guide') ? 'class="active"' : ''; ?>>Dobór
+        ramy</a>
       <a href="index.php?page=service_guide" <?php echo ($currentPage === 'service_guide') ? 'class="active"' : ''; ?>>Serwis</a>
-      <a href="index.php?page=bike_build" <?php echo ($currentPage === 'bike_build') ? 'class="active"' : ''; ?>>Budowa roweru</a>
+      <a href="index.php?page=bike_build" <?php echo ($currentPage === 'bike_build') ? 'class="active"' : ''; ?>>Budowa
+        roweru</a>
       <a href="index.php?page=workshop" <?php echo in_array($currentPage, ['workshop', 'submit_booking', 'booking_success']) ? 'class="active"' : ''; ?>>Warsztat</a>
       <a href="index.php?page=clients" <?php echo ($currentPage === 'clients') ? 'class="active"' : ''; ?>>Klienci</a>
-      <a href="index.php?page=malowanie" <?php echo ($currentPage === 'malowanie') ? 'class="active"' : ''; ?>> Malowanie i oklejanie</a>
-      <a href="index.php?page=creator" <?php echo ($currentPage === 'creator') ? 'class="active"' : ''; ?>>Skonfiguruj rower</a>
+      <a href="index.php?page=malowanie" <?php echo ($currentPage === 'malowanie') ? 'class="active"' : ''; ?>> Malowanie
+        i oklejanie</a>
+      <a href="index.php?page=creator" <?php echo ($currentPage === 'creator') ? 'class="active"' : ''; ?>>Skonfiguruj
+        rower</a>
+      <a href="index.php?page=articles" <?php echo ($currentPage === 'articles') ? 'class="active"' : ''; ?>>Artykuły</a>
 
       <div class="dropdown">
         <a href="index.php?page=faults" class="dropdown-toggle">Najczęstsze usterki <span class="caret">▾</span></a>
@@ -94,13 +116,13 @@ $_cart_count = array_sum(array_column($_SESSION['cart'], 'qty'));
       <a class="nav-btn" href="index.php?page=shop">Kup rower</a>
 
       <!-- KOSZYK — zwykły link, bez dropdown -->
-      <a class="fcart-trigger"
-         style="text-decoration:none; display:inline-flex; color:white;"
-         href="index.php?page=cart">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      <a class="fcart-trigger" style="text-decoration:none; display:inline-flex; color:white;"
+        href="index.php?page=cart">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
         </svg>
         Koszyk
         <?php if ($_cart_count > 0): ?>

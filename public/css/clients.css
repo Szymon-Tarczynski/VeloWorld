@@ -44,3 +44,33 @@
 .clients-wrap .guide-intro {
   margin-bottom: 32px; /* Większy odstęp pod tekstem wstępnym przed sliderem */
 }
+
+/* =============================================
+   DODATKOWE STYLE DLA STRONY KLIENTÓW
+   ============================================= */
+/* Toolbar sortowania */
+.clients-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  margin: 14px 0 16px;
+}
+
+.clients-sort-label{
+  color: var(--text-muted);
+  font-size: .9rem;
+}
+
+.clients-sort{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.clients-sort:focus{
+  border-color: rgba(255,255,255,.35);
+}

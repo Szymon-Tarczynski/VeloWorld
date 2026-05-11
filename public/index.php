@@ -29,12 +29,12 @@ switch ($page) {
 
     case 'shop':
         $products = getProducts([
-            'category'   => $_GET['category'] ?? '',
-            'gender'     => $_GET['gender'] ?? '',
-            'bike_type'  => $_GET['bike_type'] ?? '',
+            'category' => $_GET['category'] ?? '',
+            'gender' => $_GET['gender'] ?? '',
+            'bike_type' => $_GET['bike_type'] ?? '',
             'frame_size' => $_GET['frame_size'] ?? '',
             'wheel_size' => $_GET['wheel_size'] ?? '',
-            'q'          => trim($_GET['q'] ?? ''),
+            'q' => trim($_GET['q'] ?? ''),
         ]);
         view('shop', ['products' => $products]);
         break;
@@ -74,6 +74,26 @@ switch ($page) {
 
     case 'bike_build':
         view('bike_build');
+        break;
+
+    case 'articles':
+        view('articles');
+        break;
+
+    case 'article-redbull':
+        view('article-redbull');
+        break;
+
+    case 'article-yt':
+        view('article-yt');
+        break;
+
+    case 'article-tiger':
+        view('article-tiger');
+        break;
+
+    case 'article-basket':
+        view('article-basket');
         break;
 
     case 'clients':
@@ -119,10 +139,10 @@ switch ($page) {
 
         $data = [
             'customer_name' => $_POST['customer_name'] ?? '',
-            'phone'         => $_POST['phone'] ?? '',
-            'service'       => $_POST['service'] ?? '',
-            'date'          => $_POST['date'] ?? '',
-            'note'          => $_POST['note'] ?? ''
+            'phone' => $_POST['phone'] ?? '',
+            'service' => $_POST['service'] ?? '',
+            'date' => $_POST['date'] ?? '',
+            'note' => $_POST['note'] ?? ''
         ];
 
         $errors = validateBooking($data);
@@ -145,7 +165,7 @@ switch ($page) {
         } else {
             view('workshop', [
                 'errors' => ['Nie udało się zapisać rezerwacji.'],
-                'old'    => $data
+                'old' => $data
             ]);
         }
         break;
